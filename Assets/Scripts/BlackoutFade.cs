@@ -63,13 +63,13 @@ public class BlackoutFade : MonoBehaviour
         return flipAlpha ? 1 - alpha : alpha;
     }
 
-    public void TurnBlack()
-    {
-        fadeImage.gameObject.SetActive(true);
-        fadeImage.color = Color.black;
-    }
-    public void TurnClear()
-    {
-        fadeImage.gameObject.SetActive(false);
-    }
+    //public void TurnBlack()
+    //{
+    //    fadeImage.gameObject.SetActive(true);
+    //    fadeImage.color = Color.black;
+    //}
+    //public void TurnClear()
+    //{
+    //    fadeImage.gameObject.SetActive(false);
+    //}
 }

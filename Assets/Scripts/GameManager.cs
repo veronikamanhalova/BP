@@ -18,7 +18,7 @@ public class GameManager : MonoBehaviour
     [NonSerialized] public bool finishedClimb = false;
     bool failedClimb = false;
     bool passedBlackout = false;
-    bool screenIsBlack = false;
+    //bool screenIsBlack = false;
     bool startBlackout = false;
     public float gravity = -1.5f;
     Vector3 velocity = Vector3.zero;
@@ -37,10 +37,10 @@ public class GameManager : MonoBehaviour
     {
         UpdateClimbingStateVariables();
 
-        if (isClimbing)
-        {
-            UpdateCameraCollisionScreen();
-        }
+        //if (isClimbing)
+        //{
+        //    UpdateCameraCollisionScreen();
+        //}
 
         if (startBlackout)
         {
@@ -83,26 +83,26 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    void UpdateCameraCollisionScreen()
-    {
-        detector.CallDetection();
-        if (detector.colliderHits.Count > 0)
-        {
-            if (!screenIsBlack)
-            {
-                screenIsBlack = true;
-                camera.GetComponent<BlackoutFade>().TurnBlack();
-            }
-        }
-        else
-        {
-            if (screenIsBlack)
-            {
-                screenIsBlack = false;
-                camera.GetComponent<BlackoutFade>().TurnClear();
-            }
-        }
-    }
+    //void UpdateCameraCollisionScreen()
+    //{
+    //    detector.CallDetection();
+    //    if (detector.colliderHits.Count > 0)
+    //    {
+    //        if (!screenIsBlack)
+    //        {
+    //            screenIsBlack = true;
+    //            camera.GetComponent<BlackoutFade>().TurnBlack();
+    //        }
+    //    }
+    //    else
+    //    {
+    //        if (screenIsBlack)
+    //        {
+    //            screenIsBlack = false;
+    //            camera.GetComponent<BlackoutFade>().TurnClear();
+    //        }
+    //    }
+    //}
 
     void Reload()
     {
