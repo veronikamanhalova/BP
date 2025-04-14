@@ -7,7 +7,7 @@ using UnityEngine.XR.Interaction.Toolkit;
 public class GameManager : MonoBehaviour
 {
     [SerializeField] CharacterController characterController;
-    [SerializeField] ClimbProvider climbProvider;
+    [SerializeField] MyClimbProvider climbProvider;
     [SerializeField] GameObject startPos;
     [SerializeField] GameObject camera;
     [SerializeField] DetectHeadCollision detector;
