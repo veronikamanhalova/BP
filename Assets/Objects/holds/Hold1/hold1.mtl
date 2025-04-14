@@ -1,0 +1,24 @@
+# Blender 4.2.2 LTS MTL File: 'chyty.blend'
+# www.blender.org
+
+newmtl metalic
+Ns 382.444641
+Ka 1.000000 1.000000 1.000000
+Kd 0.219003 0.219003 0.219003
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 1
+
+newmtl yellow
+Ns 0.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.801396 0.786839 0.029623
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 1
+map_Kd BodyDiffuse.png
+map_Kn BodyNormal.png
