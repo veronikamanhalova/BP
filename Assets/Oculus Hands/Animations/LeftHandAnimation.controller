@@ -31,7 +31,13 @@ AnimatorController:
   m_Name: LeftHandAnimation
   serializedVersion: 5
   m_AnimatorParameters:
-  - m_Name: Grip
+  - m_Name: HorizontalGrab
+    m_Type: 1
+    m_DefaultFloat: 0
+    m_DefaultInt: 0
+    m_DefaultBool: 0
+    m_Controller: {fileID: 9100000}
+  - m_Name: VerticalGrab
     m_Type: 1
     m_DefaultFloat: 0
     m_DefaultInt: 0
@@ -68,19 +74,35 @@ BlendTree:
     m_Mirror: 0
   - serializedVersion: 2
     m_Motion: {fileID: 7400000, guid: 877a52b8d5868b54094a02b23f45aac3, type: 2}
-    m_Threshold: 1
-    m_Position: {x: 0, y: 0}
+    m_Threshold: 0.33333334
+    m_Position: {x: 1, y: 0}
     m_TimeScale: 1
     m_CycleOffset: 0
     m_DirectBlendParameter: Grip
     m_Mirror: 0
-  m_BlendParameter: Grip
-  m_BlendParameterY: Blend
+  - serializedVersion: 2
+    m_Motion: {fileID: 7400000, guid: e91b91c403a191d45a0b4b9e0c094935, type: 2}
+    m_Threshold: 0.6666667
+    m_Position: {x: 0, y: 1}
+    m_TimeScale: 1
+    m_CycleOffset: 0
+    m_DirectBlendParameter: Grab
+    m_Mirror: 0
+  - serializedVersion: 2
+    m_Motion: {fileID: 7400000, guid: 877a52b8d5868b54094a02b23f45aac3, type: 2}
+    m_Threshold: 1
+    m_Position: {x: 1, y: 1}
+    m_TimeScale: 1
+    m_CycleOffset: 0
+    m_DirectBlendParameter: Grab
+    m_Mirror: 0
+  m_BlendParameter: HorizontalGrab
+  m_BlendParameterY: VerticalGrab
   m_MinThreshold: 0
   m_MaxThreshold: 1
   m_UseAutomaticThresholds: 1
   m_NormalizedBlendValues: 0
-  m_BlendType: 0
+  m_BlendType: 3
 --- !u!1102 &7517445916670206149
 AnimatorState:
   serializedVersion: 6

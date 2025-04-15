@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 2588341584554933312}
   m_Layer: 0
   m_Name: Hold4
-  m_TagString: Untagged
+  m_TagString: HorizontalHold
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

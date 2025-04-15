@@ -160,24 +160,65 @@ namespace UnityEngine.XR.Interaction.Toolkit
         /// <inheritdoc />
         protected override void OnSelectEntered(SelectEnterEventArgs args)
         {
-            args.interactor.transform.parent.transform.position = FindClosestAttachPoint(args.interactor.transform).position;
+            Debug.Log("Select " + args.interactableObject.transform.tag);
+            if (args.interactableObject.transform.CompareTag("HorizontalHold"))
+                return;
+
+            args.interactorObject.transform.parent.transform.position = FindClosestAttachPoint(args.interactorObject.transform).position;
 
             base.OnSelectEntered(args);
 
             if (m_ClimbProvider != null)
-                m_ClimbProvider.StartClimbGrab(this, args.interactorObject);
+                m_ClimbProvider.StartClimbGrab(this, args.interactorObject.transform);
 
-            args.interactor.transform.GetComponent<ControllerStamina>().StartStamina();
+            args.interactorObject.transform.GetComponent<ControllerStamina>().StartStamina();
         }
 
         /// <inheritdoc />
         protected override void OnSelectExited(SelectExitEventArgs args)
         {
+            if (args.interactableObject.transform.CompareTag("HorizontalHold"))
+                return;
+
             base.OnSelectExited(args);
             if (m_ClimbProvider != null)
-                m_ClimbProvider.FinishClimbGrab(args.interactorObject);
+                m_ClimbProvider.FinishClimbGrab(args.interactorObject.transform);
 
-            args.interactor.transform.GetComponent<ControllerStamina>().EndStamina();
+            args.interactorObject.transform.GetComponent<ControllerStamina>().EndStamina();
+        }
+
+        protected override void OnActivated(ActivateEventArgs args)
+        {
+            Debug.Log("Activate " + args.interactableObject.transform.tag);
+            if (args.interactableObject.transform.CompareTag("VerticalHold"))
+                return;
+
+            //IXRSelectInteractor interactor = (IXRSelectInteractor)args.interactorObject;
+
+            args.interactorObject.transform.parent.transform.position = FindClosestAttachPoint(args.interactorObject.transform).position;
+
+            base.OnActivated(args);
+
+            if (m_ClimbProvider != null)
+                m_ClimbProvider.StartClimbGrab(this, args.interactorObject.transform);
+
+            args.interactorObject.transform.GetComponent<ControllerStamina>().StartStamina();
+        }
+
+        /// <inheritdoc />
+        protected override void OnDeactivated(DeactivateEventArgs args)
+        {
+            if (args.interactableObject.transform.CompareTag("VerticalHold"))
+                return;
+
+            base.OnDeactivated(args);
+
+            //IXRSelectInteractor interactor = (IXRSelectInteractor)args.interactorObject;
+
+            if (m_ClimbProvider != null)
+                m_ClimbProvider.FinishClimbGrab(args.interactorObject.transform);
+
+            args.interactorObject.transform.GetComponent<ControllerStamina>().EndStamina();
         }
 
         Transform FindClosestAttachPoint(Transform interactor)

@@ -386,7 +386,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84bdee88eff4daf42b0d36fefd34ada7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gripInputActionReference: {fileID: -1758520528963094988, guid: c348712bda248c246b8c49b3db54643f, type: 3}
+  horizontalGrabInputActionReference: {fileID: 7904272356298805229, guid: c348712bda248c246b8c49b3db54643f, type: 3}
+  verticalGrabInputActionReference: {fileID: -1758520528963094988, guid: c348712bda248c246b8c49b3db54643f, type: 3}
 --- !u!1 &3240524871627034550
 GameObject:
   m_ObjectHideFlags: 0

@@ -5,26 +5,35 @@ using UnityEngine.InputSystem;
 
 public class HandAnimationScript : MonoBehaviour
 {
-    public InputActionReference gripInputActionReference;
+    public InputActionReference horizontalGrabInputActionReference;
+    public InputActionReference verticalGrabInputActionReference;
 
-    private Animator _handAnimator;
-    private float _gripValue;
+    private Animator handAnimator;
+    private float horizontalValue;
+    private float verticalValue;
 
     // Start is called before the first frame update
     void Start()
     {
-        _handAnimator = GetComponent<Animator>();
+        handAnimator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        AnimateGrip();
+        AnimateHorizontalGrip();
+        AnimateVerticalGrip();
     }
 
-    private void AnimateGrip()
+    private void AnimateHorizontalGrip()
     {
-        _gripValue = gripInputActionReference.action.ReadValue<float>();
-        _handAnimator.SetFloat("Grip", _gripValue);
+        horizontalValue = horizontalGrabInputActionReference.action.ReadValue<float>();
+        handAnimator.SetFloat("HorizontalGrab", horizontalValue);
+    }
+
+    private void AnimateVerticalGrip()
+    {
+        verticalValue = verticalGrabInputActionReference.action.ReadValue<float>();
+        handAnimator.SetFloat("VerticalGrab", verticalValue);
     }
 }

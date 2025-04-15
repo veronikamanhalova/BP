@@ -9,6 +9,8 @@ TagManager:
   - LampLights
   - NightProbe
   - DayProbe
+  - HorizontalHold
+  - VerticalHold
   layers:
   - Default
   - TransparentFX

@@ -15,15 +15,15 @@ namespace UnityEngine.XR.Interaction.Toolkit
     {
         // These are parallel lists, where each interactor and its grabbed interactable share the same index in each list.
         // The last item in each list represents the most recent selection, which is the only one that actually drives movement.
-        readonly List<IXRSelectInteractor> m_GrabbingInteractors = new List<IXRSelectInteractor>();
+        readonly List<Transform> m_GrabbingInteractors = new List<Transform>();
         readonly List<MyClimbInteractable> m_GrabbedClimbables = new List<MyClimbInteractable>();
 
         List<Vector3> m_InteractorAnchorWorldPosition = new List<Vector3>();
         List<Vector3> m_InteractorAnchorClimbSpacePosition = new List<Vector3>();
 
         [SerializeField] CharacterController characterController;
-        [SerializeField] float climbForce = 10f;
-        [SerializeField] float climbDrag = 5f;
+        //[SerializeField] float climbForce = 10f;
+        //[SerializeField] float climbDrag = 5f;
 
         [SerializeField]
         [Tooltip("Climb locomotion settings. Can be overridden by the Climb Interactable used for locomotion.")]
@@ -56,7 +56,7 @@ namespace UnityEngine.XR.Interaction.Toolkit
         /// The interactor that is currently grabbing and driving movement. This will be <see langword="null"/> if
         /// there is no active climb.
         /// </summary>
-        public IXRSelectInteractor climbAnchorInteractor
+        public Transform climbAnchorInteractor
         {
             get
             {
@@ -92,7 +92,7 @@ namespace UnityEngine.XR.Interaction.Toolkit
         /// state if locomotion has not already started. The phase will then enter the <see cref="LocomotionPhase.Moving"/>
         /// state in the next <see cref="Update"/>.
         /// </remarks>
-        public void StartClimbGrab(MyClimbInteractable climbInteractable, IXRSelectInteractor interactor)
+        public void StartClimbGrab(MyClimbInteractable climbInteractable, Transform interactor)
         {
             var xrOrigin = system.xrOrigin?.Origin;
             if (xrOrigin == null)
@@ -116,7 +116,7 @@ namespace UnityEngine.XR.Interaction.Toolkit
         /// If there is no other active grab to fall back on, this will put the <see cref="LocomotionProvider.locomotionPhase"/>
         /// in the <see cref="LocomotionPhase.Done"/> state in the next <see cref="Update"/>.
         /// </remarks>
-        public void FinishClimbGrab(IXRSelectInteractor interactor)
+        public void FinishClimbGrab(Transform interactor)
         {
             var interactionIndex = m_GrabbingInteractors.IndexOf(interactor);
             if (interactionIndex < 0)
@@ -131,7 +131,7 @@ namespace UnityEngine.XR.Interaction.Toolkit
             m_InteractorAnchorWorldPosition.RemoveAt(interactionIndex);
         }
 
-        void UpdateClimbAnchor(MyClimbInteractable climbInteractable, IXRInteractor interactor)
+        void UpdateClimbAnchor(MyClimbInteractable climbInteractable, Transform interactor)
         {
             var climbTransform = climbInteractable.climbTransform;
 
@@ -143,12 +143,12 @@ namespace UnityEngine.XR.Interaction.Toolkit
                 m_InteractorAnchorWorldPosition[0] = tmpWorldPos;
                 m_InteractorAnchorClimbSpacePosition[0] = tmpClimbPos;
 
-                m_InteractorAnchorWorldPosition[1] = interactor.transform.position;
+                m_InteractorAnchorWorldPosition[1] = interactor.position;
                 m_InteractorAnchorClimbSpacePosition[1] = climbTransform.InverseTransformPoint(m_InteractorAnchorWorldPosition[1]);
             }
             else
             {
-                m_InteractorAnchorWorldPosition.Add(interactor.transform.position);
+                m_InteractorAnchorWorldPosition.Add(interactor.position);
                 m_InteractorAnchorClimbSpacePosition.Add(climbTransform.InverseTransformPoint(m_InteractorAnchorWorldPosition[m_InteractorAnchorWorldPosition.Count - 1]));
             }
 
@@ -211,7 +211,7 @@ namespace UnityEngine.XR.Interaction.Toolkit
                     var allowFreeXMovement = activeClimbSettings.allowFreeXMovement;
                     var allowFreeYMovement = activeClimbSettings.allowFreeYMovement;
                     var allowFreeZMovement = activeClimbSettings.allowFreeZMovement;
-                    var interactorWorldPosition = m_GrabbingInteractors[i].transform.position;
+                    var interactorWorldPosition = m_GrabbingInteractors[i].position;
 
                     if (allowFreeXMovement && allowFreeYMovement && allowFreeZMovement)
                     {
@@ -250,20 +250,20 @@ namespace UnityEngine.XR.Interaction.Toolkit
             }
         }
 
-        float GetDrag(IXRSelectInteractor currentInteractor)
-        {
-            var controller = currentInteractor.transform.parent.GetComponent<XRController>();
+        //float GetDrag(Transform currentInteractor)
+        //{
+        //    var controller = currentInteractor.parent.GetComponent<XRController>();
 
-            if (controller != null && controller.inputDevice.TryGetFeatureValue(CommonUsages.deviceVelocity, out Vector3 velocity))
-            {
-                float drag = 1 / velocity.magnitude + 0.01f;
-                drag = drag > 1 ? 1 : drag;
-                drag = drag < 0.03f ? 0.03f : drag;
-                return drag;
-            }
-            Debug.Log("Controller is null");
-            return 0;
-        }
+        //    if (controller != null && controller.inputDevice.TryGetFeatureValue(CommonUsages.deviceVelocity, out Vector3 velocity))
+        //    {
+        //        float drag = 1 / velocity.magnitude + 0.01f;
+        //        drag = drag > 1 ? 1 : drag;
+        //        drag = drag < 0.03f ? 0.03f : drag;
+        //        return drag;
+        //    }
+        //    Debug.Log("Controller is null");
+        //    return 0;
+        //}
 
         public void FinishLocomotion()
         {

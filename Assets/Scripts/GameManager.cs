@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 
@@ -16,14 +17,20 @@ public class GameManager : MonoBehaviour
 
     [NonSerialized] public bool isClimbing = false;
     [NonSerialized] public bool finishedClimb = false;
-    bool failedClimb = false;
-    bool passedBlackout = false;
-    //bool screenIsBlack = false;
-    bool startBlackout = false;
     public float gravity = -1.5f;
+
+    public TextMeshProUGUI timer;
+    float timerCntr = 0.0f;
+    public float minutes = 0.0f;
+    public float seconds = 0.0f;
+
+    bool startedClimb = false;
+    bool failedClimb = false;
+    bool passedBlackoutZone = false;
+    //bool screenIsBlack = false;
+    bool startScreenBlackout = false;
     Vector3 velocity = Vector3.zero;
     float groundCheckDistance = 0.5f;
-
     bool grounded = false;
 
     // Start is called before the first frame update
@@ -42,15 +49,24 @@ public class GameManager : MonoBehaviour
         //    UpdateCameraCollisionScreen();
         //}
 
-        if (startBlackout)
+        if (startedClimb) 
+        {
+            TimerIncrease();
+        }
+
+        if (startScreenBlackout)
         {
             camera.GetComponent<BlackoutFade>().Fade();
-            startBlackout = false;
+            startScreenBlackout = false;
         }
 
         if (failedClimb && grounded)
         {
             Reload();
+        }
+        else if (grounded)
+        {
+            timerCntr = 0.0f;
         }
 
         if (finishedClimb)
@@ -61,6 +77,14 @@ public class GameManager : MonoBehaviour
         topAchor.GetComponent<Collider>().enabled = isClimbing ? true : false;
         ApplyGravity();
         UpdateLimitMovement();
+    }
+
+    void TimerIncrease()
+    {
+        timerCntr += Time.deltaTime;
+        minutes = Mathf.FloorToInt(timerCntr / 60.0f);
+        seconds = Mathf.FloorToInt(timerCntr - minutes * 60.0f);
+        timer.text = string.Format("{0:00}:{1:00}",minutes,seconds);
     }
 
     void UpdateLimitMovement()
@@ -116,9 +140,14 @@ public class GameManager : MonoBehaviour
         isClimbing = false;
         finishedClimb = false;
         failedClimb = false;
+        startedClimb = false;
 
-        passedBlackout = false;
-        startBlackout = false;
+        passedBlackoutZone = false;
+        startScreenBlackout = false;
+
+        timerCntr = 0.0f;
+        foreach (ControllerStamina stamina in characterController.GetComponentsInChildren<ControllerStamina>())
+            stamina.staminaVal = 100.0f;
     }
 
     void UpdateClimbingStateVariables()
@@ -127,13 +156,18 @@ public class GameManager : MonoBehaviour
         isClimbing = climbProvider.climbAnchorInteractor != null;
 
         if (characterController.transform.position.y > blackoutZone.transform.position.y)
-            passedBlackout = true;
+            passedBlackoutZone = true;
 
-        if (!isClimbing && !grounded && passedBlackout && characterController.transform.position.y <= blackoutZone.transform.position.y)
+        if (!prevClimbingState && isClimbing)
         {
-            startBlackout = true;
+            startedClimb = true;
+        }
+
+        if (!isClimbing && !grounded && passedBlackoutZone && characterController.transform.position.y <= blackoutZone.transform.position.y)
+        {
+            startScreenBlackout = true;
             failedClimb = true;
-            passedBlackout = false;
+            passedBlackoutZone = false;
         }
     }
 
