@@ -71,7 +71,7 @@ namespace UnityEngine.XR.Interaction.Toolkit
         /// and <see cref="climbAnchorInteractor"/>. This can be invoked from either <see cref="StartClimbGrab"/> or
         /// <see cref="FinishClimbGrab"/>. This is not invoked when climb locomotion ends.
         /// </summary>
-        public event Action<ClimbProvider> climbAnchorUpdated;
+        //public event Action<ClimbProvider> climbAnchorUpdated;
 
         /// <inheritdoc />
         protected override void Awake()

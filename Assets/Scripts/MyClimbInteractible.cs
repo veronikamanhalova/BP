@@ -160,7 +160,6 @@ namespace UnityEngine.XR.Interaction.Toolkit
         /// <inheritdoc />
         protected override void OnSelectEntered(SelectEnterEventArgs args)
         {
-            Debug.Log("Select " + args.interactableObject.transform.tag);
             if (args.interactableObject.transform.CompareTag("HorizontalHold"))
                 return;
 
@@ -189,11 +188,8 @@ namespace UnityEngine.XR.Interaction.Toolkit
 
         protected override void OnActivated(ActivateEventArgs args)
         {
-            Debug.Log("Activate " + args.interactableObject.transform.tag);
             if (args.interactableObject.transform.CompareTag("VerticalHold"))
                 return;
-
-            //IXRSelectInteractor interactor = (IXRSelectInteractor)args.interactorObject;
 
             args.interactorObject.transform.parent.transform.position = FindClosestAttachPoint(args.interactorObject.transform).position;
 
@@ -212,8 +208,6 @@ namespace UnityEngine.XR.Interaction.Toolkit
                 return;
 
             base.OnDeactivated(args);
-
-            //IXRSelectInteractor interactor = (IXRSelectInteractor)args.interactorObject;
 
             if (m_ClimbProvider != null)
                 m_ClimbProvider.FinishClimbGrab(args.interactorObject.transform);

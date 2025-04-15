@@ -7,6 +7,7 @@ using UnityEngine.XR.Interaction.Toolkit;
 
 public class GameManager : MonoBehaviour
 {
+    [SerializeField] GameMenuManager gameMenuManager;
     [SerializeField] CharacterController characterController;
     [SerializeField] MyClimbProvider climbProvider;
     [SerializeField] GameObject startPos;
@@ -17,12 +18,11 @@ public class GameManager : MonoBehaviour
 
     [NonSerialized] public bool isClimbing = false;
     [NonSerialized] public bool finishedClimb = false;
-    public float gravity = -1.5f;
 
     public TextMeshProUGUI timer;
     float timerCntr = 0.0f;
-    public float minutes = 0.0f;
-    public float seconds = 0.0f;
+    float minutes = 0.0f;
+    float seconds = 0.0f;
 
     bool startedClimb = false;
     bool failedClimb = false;
@@ -32,6 +32,7 @@ public class GameManager : MonoBehaviour
     Vector3 velocity = Vector3.zero;
     float groundCheckDistance = 0.5f;
     bool grounded = false;
+    float gravity = -1.5f;
 
     // Start is called before the first frame update
     void Start()
@@ -211,5 +212,16 @@ public class GameManager : MonoBehaviour
         finishedClimb = true;
 
         climbProvider.FinishLocomotion();
+    }
+
+    public void newGame()
+    {
+        gameMenuManager.ToggleMenuVisibility();
+        Reload();
+    }
+
+    public void exitGame()
+    {
+        Application.Quit();
     }
 }
