@@ -9,6 +9,8 @@ public class GameManager : MonoBehaviour
 {
     [SerializeField] GameMenuManager gameMenuManager;
     [SerializeField] CharacterController characterController;
+    [SerializeField] GameObject leftControllerStamina;
+    [SerializeField] GameObject rightControllerStamina;
     [SerializeField] MyClimbProvider climbProvider;
     [SerializeField] GameObject startPos;
     [SerializeField] GameObject camera;
@@ -24,7 +26,7 @@ public class GameManager : MonoBehaviour
     float minutes = 0.0f;
     float seconds = 0.0f;
 
-    bool startedClimb = false;
+    public bool startedClimb = false;
     bool failedClimb = false;
     bool passedBlackoutZone = false;
     //bool screenIsBlack = false;
@@ -33,6 +35,8 @@ public class GameManager : MonoBehaviour
     float groundCheckDistance = 0.5f;
     bool grounded = false;
     float gravity = -1.5f;
+
+    [NonSerialized] public bool proClimbingMode = false;
 
     // Start is called before the first frame update
     void Start()
@@ -50,7 +54,7 @@ public class GameManager : MonoBehaviour
         //    UpdateCameraCollisionScreen();
         //}
 
-        if (startedClimb) 
+        if (startedClimb && proClimbingMode) 
         {
             TimerIncrease();
         }
@@ -223,5 +227,13 @@ public class GameManager : MonoBehaviour
     public void exitGame()
     {
         Application.Quit();
+    }
+
+    public void ChangeCLimbingStyle()
+    {
+        proClimbingMode = !proClimbingMode;
+
+        leftControllerStamina.SetActive(proClimbingMode);
+        rightControllerStamina.SetActive(proClimbingMode);
     }
 }

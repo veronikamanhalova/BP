@@ -7,6 +7,7 @@ using UnityEngine.InputSystem;
 public class GameMenuManager : MonoBehaviour
 {
     public GameObject gameMenu;
+    [SerializeField] GameManager gameManager;
     [SerializeField] private Transform cameraTransform;
     public InputActionProperty showMenuButton;
     bool showMenu = true;
@@ -14,12 +15,13 @@ public class GameMenuManager : MonoBehaviour
 
     private void Start()
     {
+
         gameMenu.SetActive(showMenu);
     }
     // Update is called once per frame
     void Update()
     {
-        if (showMenuButton.action.WasPressedThisFrame())
+        if (showMenuButton.action.WasPressedThisFrame() && !gameManager.startedClimb)
         {
             ToggleMenuVisibility();
         }

@@ -118,6 +118,7 @@ namespace UnityEngine.XR.Interaction.Toolkit
         }
 
         public List<Transform> attachPoints = new List<Transform>();
+        [SerializeField] GameManager gameManager;
 
         /// <summary>
         /// See <see cref="MonoBehaviour"/>.
@@ -170,7 +171,8 @@ namespace UnityEngine.XR.Interaction.Toolkit
             if (m_ClimbProvider != null)
                 m_ClimbProvider.StartClimbGrab(this, args.interactorObject.transform);
 
-            args.interactorObject.transform.GetComponent<ControllerStamina>().StartStamina();
+            if (gameManager.proClimbingMode)
+                args.interactorObject.transform.GetComponent<ControllerStamina>().StartStamina();
         }
 
         /// <inheritdoc />
@@ -183,7 +185,8 @@ namespace UnityEngine.XR.Interaction.Toolkit
             if (m_ClimbProvider != null)
                 m_ClimbProvider.FinishClimbGrab(args.interactorObject.transform);
 
-            args.interactorObject.transform.GetComponent<ControllerStamina>().EndStamina();
+            if (gameManager.proClimbingMode)
+                args.interactorObject.transform.GetComponent<ControllerStamina>().EndStamina();
         }
 
         protected override void OnActivated(ActivateEventArgs args)
@@ -198,7 +201,8 @@ namespace UnityEngine.XR.Interaction.Toolkit
             if (m_ClimbProvider != null)
                 m_ClimbProvider.StartClimbGrab(this, args.interactorObject.transform);
 
-            args.interactorObject.transform.GetComponent<ControllerStamina>().StartStamina();
+            if (gameManager.proClimbingMode)
+                args.interactorObject.transform.GetComponent<ControllerStamina>().StartStamina();
         }
 
         /// <inheritdoc />
@@ -212,7 +216,8 @@ namespace UnityEngine.XR.Interaction.Toolkit
             if (m_ClimbProvider != null)
                 m_ClimbProvider.FinishClimbGrab(args.interactorObject.transform);
 
-            args.interactorObject.transform.GetComponent<ControllerStamina>().EndStamina();
+            if (gameManager.proClimbingMode)
+                args.interactorObject.transform.GetComponent<ControllerStamina>().EndStamina();
         }
 
         Transform FindClosestAttachPoint(Transform interactor)
