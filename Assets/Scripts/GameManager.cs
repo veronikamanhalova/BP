@@ -8,6 +8,7 @@ using UnityEngine.XR.Interaction.Toolkit;
 public class GameManager : MonoBehaviour
 {
     [SerializeField] GameMenuManager gameMenuManager;
+    [SerializeField] WallGenerator wallGenerator;
     [SerializeField] CharacterController characterController;
     [SerializeField] GameObject leftControllerStamina;
     [SerializeField] GameObject rightControllerStamina;
@@ -220,6 +221,7 @@ public class GameManager : MonoBehaviour
 
     public void newGame()
     {
+        wallGenerator.GenerateWall();
         gameMenuManager.ToggleMenuVisibility();
         Reload();
     }
