@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
-
 public enum Dirrection
 {
     Right = 1,
@@ -23,11 +22,12 @@ public class WallGenerator : MonoBehaviour
     [SerializeField] GameObject[] leftDiagonalGroup;
     const int wallParts = 8;
     const int wallSides = 4;
-    // Start is called before the first frame update
+    int difficultyIdx;
 
-    public void GenerateWall()
+    public void GenerateWall(Difficulty diff)
     {
         DestroyWall();
+        difficultyIdx = (int)diff;
         int generatedParts = 0;
         int lastWallSideIdx = 0;
         Dirrection dirrection = Dirrection.Straight;
@@ -62,24 +62,33 @@ public class WallGenerator : MonoBehaviour
                         if (groupIdx == (int)Dirrection.Right)
                         {
                             //generate Right Group
-                            int randIdx = Random.Range(0, rightDiagonalGroup.Length - 1);
-                            Instantiate(rightDiagonalGroup[randIdx], newPos, Quaternion.Euler(rotations[wallSideIdx]), holds);
+                            int randIdx = (Random.Range(0, 99) < 50) ? difficultyIdx : Random.Range(0, rightDiagonalGroup.Length - 1);
+
+                            rightDiagonalGroup[difficultyIdx].SetActive(true);
+                            Instantiate(rightDiagonalGroup[difficultyIdx], newPos, Quaternion.Euler(rotations[wallSideIdx]), holds);
+                            rightDiagonalGroup[difficultyIdx].SetActive(false);
 
                             dirrection = Dirrection.Right;
                         }
                         else if(groupIdx == (int)Dirrection.Left)
                         {
                             //generate Left Group
-                            int randIdx = Random.Range(0, leftDiagonalGroup.Length - 1);
-                            Instantiate(leftDiagonalGroup[randIdx], newPos, Quaternion.Euler(rotations[wallSideIdx]), holds);
+                            int randIdx = (Random.Range(0, 99) < 50) ? difficultyIdx : Random.Range(0, leftDiagonalGroup.Length - 1);
+
+                            leftDiagonalGroup[difficultyIdx].SetActive(true);
+                            Instantiate(leftDiagonalGroup[difficultyIdx], newPos, Quaternion.Euler(rotations[wallSideIdx]), holds);
+                            leftDiagonalGroup[difficultyIdx].SetActive(false);
 
                             dirrection = Dirrection.Left;
                         }
                         else
                         {
                             //generate Square Group 
-                            int randIdx = Random.Range(0, squareGroup.Length - 1);
-                            Instantiate(squareGroup[randIdx], newPos, Quaternion.Euler(rotations[wallSideIdx]), holds);
+                            int randIdx = (Random.Range(0, 99) < 50) ? difficultyIdx : Random.Range(0, squareGroup.Length - 1);
+
+                            squareGroup[difficultyIdx].SetActive(true);
+                            Instantiate(squareGroup[difficultyIdx], newPos, Quaternion.Euler(rotations[wallSideIdx]), holds);
+                            squareGroup[difficultyIdx].SetActive(false);
 
                             dirrection = Dirrection.Straight;
                         }
@@ -126,16 +135,22 @@ public class WallGenerator : MonoBehaviour
         if (groupIdx == (int)Dirrection.Right)
         {
             //generate Right Group
-            int randIdx = Random.Range(0, rightDiagonalGroup.Length - 1);
+            int randIdx = (Random.Range(0, 99) < 50) ? difficultyIdx : Random.Range(0, rightDiagonalGroup.Length - 1);
+            
+            rightDiagonalGroup[randIdx].SetActive(true);
             Instantiate(rightDiagonalGroup[randIdx], newPos, Quaternion.Euler(rotations[wallSideIdx]), holds);
+            rightDiagonalGroup[randIdx].SetActive(false);
 
             dirrection = Dirrection.Right;
         }
         else
         {
             //generate Square Group 
-            int randIdx = Random.Range(0, squareGroup.Length - 1);
+            int randIdx = (Random.Range(0, 99) < 50) ? difficultyIdx : Random.Range(0, squareGroup.Length - 1);
+
+            squareGroup[randIdx].SetActive(true);
             Instantiate(squareGroup[randIdx], newPos, Quaternion.Euler(rotations[wallSideIdx]), holds);
+            squareGroup[randIdx].SetActive(false);
 
             dirrection = Dirrection.Straight;
         }
@@ -148,16 +163,22 @@ public class WallGenerator : MonoBehaviour
         if (groupIdx == (int)Dirrection.Left)
         {
             //generate Left Group
-            int randIdx = Random.Range(0, leftDiagonalGroup.Length - 1);
+            int randIdx = (Random.Range(0, 99) < 50) ? difficultyIdx : Random.Range(0, leftDiagonalGroup.Length - 1);
+
+            leftDiagonalGroup[randIdx].SetActive(true);
             Instantiate(leftDiagonalGroup[randIdx], newPos, Quaternion.Euler(rotations[wallSideIdx]), holds);
+            leftDiagonalGroup[randIdx].SetActive(false);
 
             dirrection = Dirrection.Left;
         }
         else
         {
             //generate Square Group 
-            int randIdx = Random.Range(0, squareGroup.Length - 1);
+            int randIdx = (Random.Range(0, 99) < 50) ? difficultyIdx : Random.Range(0, squareGroup.Length - 1);
+
+            squareGroup[randIdx].SetActive(true);
             Instantiate(squareGroup[randIdx], newPos, Quaternion.Euler(rotations[wallSideIdx]), holds);
+            squareGroup[randIdx].SetActive(false);
 
             dirrection = Dirrection.Straight;
         }

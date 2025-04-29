@@ -11,11 +11,10 @@ public class GameMenuManager : MonoBehaviour
     [SerializeField] private Transform cameraTransform;
     public InputActionProperty showMenuButton;
     bool showMenu = true;
-    float menuDistance = 2.0f;
+    float distance = 2.0f;
 
     private void Start()
     {
-
         gameMenu.SetActive(showMenu);
     }
     // Update is called once per frame
@@ -38,7 +37,7 @@ public class GameMenuManager : MonoBehaviour
         showMenu = !showMenu;
 
         if (showMenu)
-            gameMenu.transform.position = cameraTransform.position + new Vector3(cameraTransform.forward.x, 0, cameraTransform.forward.z).normalized * menuDistance;
+            gameMenu.transform.position = cameraTransform.position + new Vector3(cameraTransform.forward.x, 0, cameraTransform.forward.z).normalized * distance;
 
         gameMenu.SetActive(showMenu);
     }

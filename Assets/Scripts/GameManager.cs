@@ -1,14 +1,23 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
-
+using UnityEngine.UI;
+public enum Difficulty
+{
+    Easy,
+    Medium,
+    Hard
+}
 public class GameManager : MonoBehaviour
 {
     [SerializeField] GameMenuManager gameMenuManager;
     [SerializeField] WallGenerator wallGenerator;
+    [SerializeField] LeaderboardManager leaderboardManager;
     [SerializeField] CharacterController characterController;
     [SerializeField] GameObject leftControllerStamina;
     [SerializeField] GameObject rightControllerStamina;
@@ -22,7 +31,7 @@ public class GameManager : MonoBehaviour
     [NonSerialized] public bool isClimbing = false;
     [NonSerialized] public bool finishedClimb = false;
 
-    public TextMeshProUGUI timer;
+    public Text timer;
     float timerCntr = 0.0f;
     float minutes = 0.0f;
     float seconds = 0.0f;
@@ -38,10 +47,14 @@ public class GameManager : MonoBehaviour
     float gravity = -1.5f;
 
     [NonSerialized] public bool proClimbingMode = false;
+    Difficulty difficulty = Difficulty.Easy;
+
+    int cntr = 0;
 
     // Start is called before the first frame update
     void Start()
     {
+        leaderboardManager.LoadLeaderboard();
         Reload();
     }
 
@@ -77,7 +90,10 @@ public class GameManager : MonoBehaviour
 
         if (finishedClimb)
         {
-            //todo
+            BoardEntry boardEntry = new BoardEntry("Anon" + cntr, timerCntr);
+            cntr++;
+            leaderboardManager.leaderboard.AddLeaderboardEntry(boardEntry);
+            leaderboardManager.ShowLeaderboard();
         }
 
         topAchor.GetComponent<Collider>().enabled = isClimbing ? true : false;
@@ -221,13 +237,14 @@ public class GameManager : MonoBehaviour
 
     public void newGame()
     {
-        wallGenerator.GenerateWall();
+        wallGenerator.GenerateWall(difficulty);
         gameMenuManager.ToggleMenuVisibility();
         Reload();
     }
 
     public void exitGame()
     {
+        leaderboardManager.SaveLeaderboard();
         Application.Quit();
     }
 
@@ -237,5 +254,10 @@ public class GameManager : MonoBehaviour
 
         leftControllerStamina.SetActive(proClimbingMode);
         rightControllerStamina.SetActive(proClimbingMode);
+    }
+
+    public void ChangeDifficulty(int diff)
+    {
+       difficulty = (Difficulty)diff;
     }
 }
