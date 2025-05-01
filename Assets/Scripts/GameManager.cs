@@ -31,7 +31,7 @@ public class GameManager : MonoBehaviour
     [NonSerialized] public bool isClimbing = false;
     [NonSerialized] public bool finishedClimb = false;
 
-    public Text timer;
+    public TextMeshProUGUI timer;
     float timerCntr = 0.0f;
     float minutes = 0.0f;
     float seconds = 0.0f;

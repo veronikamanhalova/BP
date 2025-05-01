@@ -42839,7 +42839,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameMenuManager: {fileID: 501608318}
   wallGenerator: {fileID: 1714894284}
-  leaderboardManager: {fileID: 0}
+  leaderboardManager: {fileID: 1882243238}
   characterController: {fileID: 30403229}
   leftControllerStamina: {fileID: 47725423}
   rightControllerStamina: {fileID: 621030345}
@@ -42849,7 +42849,7 @@ MonoBehaviour:
   detector: {fileID: 1099696953}
   blackoutZone: {fileID: 1399289926}
   topAchor: {fileID: 2121964958}
-  timer: {fileID: 0}
+  timer: {fileID: 1031487003}
   startedClimb: 0
 --- !u!4 &1177263638
 Transform:

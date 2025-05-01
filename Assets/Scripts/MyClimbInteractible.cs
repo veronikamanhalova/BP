@@ -163,7 +163,7 @@ namespace UnityEngine.XR.Interaction.Toolkit
         {
             if (args.interactableObject.transform.CompareTag("HorizontalHold"))
                 return;
-
+            Debug.Log(args.interactableObject.transform.tag);
             args.interactorObject.transform.parent.transform.position = FindClosestAttachPoint(args.interactorObject.transform).position;
 
             base.OnSelectEntered(args);
@@ -178,9 +178,6 @@ namespace UnityEngine.XR.Interaction.Toolkit
         /// <inheritdoc />
         protected override void OnSelectExited(SelectExitEventArgs args)
         {
-            if (args.interactableObject.transform.CompareTag("HorizontalHold"))
-                return;
-
             base.OnSelectExited(args);
             if (m_ClimbProvider != null)
                 m_ClimbProvider.FinishClimbGrab(args.interactorObject.transform);
@@ -192,8 +189,7 @@ namespace UnityEngine.XR.Interaction.Toolkit
         protected override void OnActivated(ActivateEventArgs args)
         {
             if (args.interactableObject.transform.CompareTag("VerticalHold"))
-                return;
-
+            Debug.Log(args.interactableObject.transform.tag);
             args.interactorObject.transform.parent.transform.position = FindClosestAttachPoint(args.interactorObject.transform).position;
 
             base.OnActivated(args);
@@ -208,9 +204,6 @@ namespace UnityEngine.XR.Interaction.Toolkit
         /// <inheritdoc />
         protected override void OnDeactivated(DeactivateEventArgs args)
         {
-            if (args.interactableObject.transform.CompareTag("VerticalHold"))
-                return;
-
             base.OnDeactivated(args);
 
             if (m_ClimbProvider != null)
