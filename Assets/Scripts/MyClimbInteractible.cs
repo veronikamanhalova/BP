@@ -161,56 +161,88 @@ namespace UnityEngine.XR.Interaction.Toolkit
         /// <inheritdoc />
         protected override void OnSelectEntered(SelectEnterEventArgs args)
         {
+            Transform interactor = args.interactorObject.transform;
+
             if (args.interactableObject.transform.CompareTag("HorizontalHold"))
                 return;
-            Debug.Log(args.interactableObject.transform.tag);
-            args.interactorObject.transform.parent.transform.position = FindClosestAttachPoint(args.interactorObject.transform).position;
 
             base.OnSelectEntered(args);
 
+            Transform attachPoint = FindClosestAttachPoint(interactor);
+            interactor.parent.transform.position = attachPoint.position;
+
+            interactor.parent.GetComponent<HandPhysics>().ClimbGrabFixHand(attachPoint);
+
             if (m_ClimbProvider != null)
-                m_ClimbProvider.StartClimbGrab(this, args.interactorObject.transform);
+                m_ClimbProvider.StartClimbGrab(this, interactor);
 
             if (gameManager.proClimbingMode)
-                args.interactorObject.transform.GetComponent<ControllerStamina>().StartStamina();
+                interactor.GetComponent<ControllerStamina>().StartStamina();
         }
 
         /// <inheritdoc />
         protected override void OnSelectExited(SelectExitEventArgs args)
         {
+            Transform interactor = args.interactorObject.transform;
+
             base.OnSelectExited(args);
+
+            interactor.parent.GetComponent<HandPhysics>().ClimbGrabUnfixHand();
+
             if (m_ClimbProvider != null)
-                m_ClimbProvider.FinishClimbGrab(args.interactorObject.transform);
+                m_ClimbProvider.FinishClimbGrab(interactor);
 
             if (gameManager.proClimbingMode)
-                args.interactorObject.transform.GetComponent<ControllerStamina>().EndStamina();
+                interactor.GetComponent<ControllerStamina>().EndStamina();
         }
 
         protected override void OnActivated(ActivateEventArgs args)
         {
+            Transform interactor = args.interactorObject.transform;
+
             if (args.interactableObject.transform.CompareTag("VerticalHold"))
-            Debug.Log(args.interactableObject.transform.tag);
-            args.interactorObject.transform.parent.transform.position = FindClosestAttachPoint(args.interactorObject.transform).position;
+                return;
 
             base.OnActivated(args);
 
+            Transform attachPoint = FindClosestAttachPoint(interactor);
+            interactor.parent.transform.position = attachPoint.position;
+
+            interactor.parent.GetComponent<HandPhysics>().ClimbGrabFixHand(attachPoint);
+
             if (m_ClimbProvider != null)
-                m_ClimbProvider.StartClimbGrab(this, args.interactorObject.transform);
+                m_ClimbProvider.StartClimbGrab(this, interactor);
 
             if (gameManager.proClimbingMode)
-                args.interactorObject.transform.GetComponent<ControllerStamina>().StartStamina();
+                interactor.GetComponent<ControllerStamina>().StartStamina();
         }
 
         /// <inheritdoc />
         protected override void OnDeactivated(DeactivateEventArgs args)
         {
+            Transform interactor = args.interactorObject.transform;
+
             base.OnDeactivated(args);
 
+            interactor.parent.GetComponent<HandPhysics>().ClimbGrabUnfixHand();
+
             if (m_ClimbProvider != null)
-                m_ClimbProvider.FinishClimbGrab(args.interactorObject.transform);
+                m_ClimbProvider.FinishClimbGrab(interactor);
 
             if (gameManager.proClimbingMode)
-                args.interactorObject.transform.GetComponent<ControllerStamina>().EndStamina();
+                interactor.GetComponent<ControllerStamina>().EndStamina();
+        }
+
+        public void DeactivateHold(DeactivateEventArgs args)
+        {
+            Transform interactor = args.interactorObject.transform;
+
+            base.OnDeactivated(args);
+
+            interactor.parent.GetComponent<HandPhysics>().ClimbGrabUnfixHand();
+
+            if (gameManager.proClimbingMode)
+                interactor.GetComponent<ControllerStamina>().EndStamina();
         }
 
         Transform FindClosestAttachPoint(Transform interactor)

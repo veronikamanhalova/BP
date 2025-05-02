@@ -36,7 +36,7 @@ public class GameManager : MonoBehaviour
     float minutes = 0.0f;
     float seconds = 0.0f;
 
-    public bool startedClimb = false;
+    [NonSerialized] public bool startedClimb = false;
     bool failedClimb = false;
     bool passedBlackoutZone = false;
     //bool screenIsBlack = false;

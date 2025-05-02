@@ -186,6 +186,9 @@ namespace UnityEngine.XR.Interaction.Toolkit
 
                 Assert.AreEqual(m_GrabbingInteractors.Count, m_GrabbedClimbables.Count);
 
+                // Deactivate interactors that are not currently hovering over the object but released trigger button
+                DeactivateNonHoveringInteractors();
+
                 StepClimbMovement();
             }
             else if (locomotionPhase != LocomotionPhase.Idle)
@@ -194,6 +197,29 @@ namespace UnityEngine.XR.Interaction.Toolkit
             }
         }
 
+        void DeactivateNonHoveringInteractors()
+        {
+            List<GameObject> InteractorToDeactivate = new List<GameObject>();
+            List<GameObject> InteractableToDeactivate = new List<GameObject>();
+
+            for (int i = 0; i < m_GrabbedClimbables.Count; i++)
+            {
+                if (m_GrabbingInteractors[i].parent.transform.gameObject.GetComponent<XRBaseController>().activateInteractionState.deactivatedThisFrame && m_GrabbingInteractors[i].gameObject.GetComponent<XRDirectInteractor>().hasHover == false)
+                {
+                    InteractorToDeactivate.Add(m_GrabbingInteractors[i].gameObject);
+                    InteractableToDeactivate.Add(m_GrabbedClimbables[i].gameObject);
+                }
+            }
+
+            for (int i = 0; i < InteractorToDeactivate.Count; i++)
+            {
+                FinishClimbGrab(InteractorToDeactivate[i].transform);
+                DeactivateEventArgs deactivateEventArgs = new DeactivateEventArgs();
+                deactivateEventArgs.interactorObject = InteractorToDeactivate[i].GetComponent<XRDirectInteractor>();
+                deactivateEventArgs.interactableObject = InteractableToDeactivate[i].GetComponent<MyClimbInteractable>();
+                InteractableToDeactivate[i].GetComponent<MyClimbInteractable>().DeactivateHold(deactivateEventArgs);
+            }
+        }
         void StepClimbMovement()
         {
             var xrOrigin = system.xrOrigin?.Origin;
