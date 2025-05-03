@@ -27,6 +27,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] DetectHeadCollision detector;
     [SerializeField] Transform blackoutZone;
     [SerializeField] GameObject topAchor;
+    [SerializeField] LayerMask rayCastCharacter;
 
     [NonSerialized] public bool isClimbing = false;
     [NonSerialized] public bool finishedClimb = false;
@@ -42,15 +43,15 @@ public class GameManager : MonoBehaviour
     //bool screenIsBlack = false;
     bool startScreenBlackout = false;
     Vector3 gravityVelocity = Vector3.zero;
-    float groundCheckDistance = 0.5f;
+    float groundCheckDistance = 0.2f;
     bool grounded = false;
     float gravity = -1.5f;
     public float maxJumpPower = 3f;
     float jumpPower = 0.0f;
-    float velocityConst = 0.01f;
-    Vector3 characterLastPos;
+    List<Vector3> characterLastPos = new List<Vector3>();
+    int velocityAvrgCnt = 5;
     Vector3 characterVelocity;
-    Vector3 jumpingVelocity;
+    Vector3 directionVelocity = Vector3.zero;
     bool jumping = false;
 
     [NonSerialized] public bool proClimbingMode = false;
@@ -61,7 +62,10 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        characterLastPos = characterController.transform.position;
+        for (int i = 0; i < velocityAvrgCnt; i++)
+        {
+            characterLastPos.Add(characterController.transform.position);
+        }
         characterVelocity = characterController.velocity;
         leaderboardManager.LoadLeaderboard();
         Reload();
@@ -109,8 +113,17 @@ public class GameManager : MonoBehaviour
 
     void CalculateCharacterVelocity()
     {
-        characterVelocity = characterController.transform.position - characterLastPos;
-        characterLastPos = characterController.transform.position;
+        characterLastPos.Add(characterController.transform.position);
+
+        Vector3 addedVelocities = Vector3.zero;
+        for (int i = 0; i < velocityAvrgCnt; i++)
+        {
+            addedVelocities += characterLastPos[i + 1] - characterLastPos[i];
+        }
+        addedVelocities /= velocityAvrgCnt;
+        characterVelocity = addedVelocities;
+
+        characterLastPos.RemoveAt(0);
     }
 
     void TimerIncrease()
@@ -186,51 +199,71 @@ public class GameManager : MonoBehaviour
 
     void ApplyGravity()
     {
-        if (grounded || isClimbing)
+        if (jumping)
         {
-            gravityVelocity = Vector3.zero;
-            //characterVelocity = Vector3.zero;
-            bool willCollideWithGround = Physics.Raycast(characterController.transform.position, Vector3.down, out RaycastHit hitInfo, groundCheckDistance);
-
-            if (!willCollideWithGround || isClimbing)
+            characterController.Move(directionVelocity * jumpPower);
+            jumpPower += gravity * 3 * Time.deltaTime;
+            Debug.Log("Jumping");
+            if (jumpPower < 0.0f)
             {
+                jumpPower = 0.0f;
+                jumping = false;
+                gravityVelocity = Vector3.zero;
                 grounded = false;
             }
+        }
+        else if (isClimbing)
+        {
+            grounded = false;
+            Debug.Log("Climbing");
+        }
+        else if (grounded)
+        {
+            Vector3 characterPos = characterController.transform.position;
+            bool willCollideWithGround = Physics.Raycast(characterPos, Vector3.down, out RaycastHit hitInfo, groundCheckDistance, rayCastCharacter);
+
+            if (!willCollideWithGround)
+            {
+                grounded = false;
+                directionVelocity = new Vector3(characterVelocity.x / 3, 0, characterVelocity.z / 3);
+                gravityVelocity = Vector3.zero;
+            }
+            gravityVelocity = Vector3.zero;
+            Debug.Log("Grounded");
         }
         else if (!grounded)
         {
             gravityVelocity.y += gravity * Time.deltaTime;
-            Vector3 nextPos = characterController.transform.position + (gravityVelocity * Time.deltaTime);
+            Vector3 nextPos = characterController.transform.position;
+            bool willCollideWithGround = Physics.Raycast(nextPos, Vector3.down, out RaycastHit hitInfo, groundCheckDistance, rayCastCharacter);
 
-            bool willCollideWithGround = Physics.Raycast(nextPos, Vector3.down, out RaycastHit hitInfo, groundCheckDistance);
+            // Raycast nefunguje kdyz se origin nachazi v stejne colideru, dame hrace o kuse vejs a strelime raycast
+            nextPos.y -= gravity * Time.deltaTime;
+            bool isInsideCollider = Physics.Raycast(nextPos, Vector3.down, out RaycastHit hitInfo2, groundCheckDistance, rayCastCharacter);
 
             if (willCollideWithGround)
             {
                 // Set Player to the ground
-                gravityVelocity.y = -Math.Abs(hitInfo.point.y - characterController.transform.position.y) + characterController.skinWidth;
-                characterController.Move(gravityVelocity);
-                gravityVelocity = Vector3.zero;
+                float moveDown = -Math.Abs(hitInfo.point.y - characterController.transform.position.y) + characterController.skinWidth;
+                characterController.Move(new Vector3(0.0f, moveDown, 0.0f));
 
+                gravityVelocity = Vector3.zero;
                 grounded = true;
-                jumping = false;
+            }
+            else if (isInsideCollider)
+            {
+                characterController.Move(nextPos - characterController.transform.position);
+
+                gravityVelocity = Vector3.zero;
+                grounded = true;
             }
             else
             {
-                if (jumping)
-                {
-                    characterController.Move(Time.deltaTime * jumpingVelocity * jumpPower + gravityVelocity / 2);
+                Vector3 sidewaysVelocity = new Vector3(directionVelocity.x, 0, directionVelocity.z); // tohle se nepouziva
 
-                    jumpPower += gravity * Time.deltaTime;
-                    if (jumpPower < 0.0f)
-                        jumpPower = 0.0f;
+                characterController.Move(sidewaysVelocity + gravityVelocity * Time.deltaTime);
 
-                    //if (jumpingVelocity.y > 0)
-                    //    jumpingVelocity += gravityVelocity / 2;
-                }
-                else
-                {
-                    characterController.Move(jumpingVelocity + gravityVelocity);
-                }
+                Debug.Log("Falling");
             }
         }
     }
@@ -268,21 +301,14 @@ public class GameManager : MonoBehaviour
        difficulty = (Difficulty)diff;
     }
 
-    float CalculateLengthOfVelocityVector()
+    float CalculateLengthOfVelocityVector(Vector3 vec)
     {
-        return (float) Math.Sqrt(Math.Pow(characterVelocity.x, 2) + Math.Pow(characterVelocity.y, 2) + Math.Pow(characterVelocity.z, 2));
+        return (float) Math.Sqrt(Math.Pow(vec.x, 2) + Math.Pow(vec.y, 2) + Math.Pow(vec.z, 2));
     }
     public void Jump()
     {
-        float length = CalculateLengthOfVelocityVector();
-        if (length < velocityConst || characterVelocity.y < 0.0f)
-        {
-            jumpingVelocity = characterVelocity.normalized;
-            return;
-        }
-        jumpingVelocity = characterVelocity.normalized;
-        jumpingVelocity = new Vector3(jumpingVelocity.x / 2, jumpingVelocity.y * 2f, jumpingVelocity.z / 2);
-        jumpPower = length * maxJumpPower;
+        directionVelocity = new Vector3(characterVelocity.x / 3f, characterVelocity.y * 3f, characterVelocity.z / 3f);
+        jumpPower = Mathf.Clamp(CalculateLengthOfVelocityVector(directionVelocity) * maxJumpPower, 0, maxJumpPower);
         jumping = true;
     }
 }

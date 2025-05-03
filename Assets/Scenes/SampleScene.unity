@@ -43687,6 +43687,9 @@ MonoBehaviour:
   detector: {fileID: 1099696953}
   blackoutZone: {fileID: 1399289926}
   topAchor: {fileID: 2121964958}
+  rayCastCharacter:
+    serializedVersion: 2
+    m_Bits: 256
   timer: {fileID: 1031487003}
   maxJumpPower: 3
 --- !u!4 &1177263638
@@ -81735,7 +81738,7 @@ GameObject:
   - component: {fileID: 1728625408531289346}
   - component: {fileID: 9203660587171034691}
   - component: {fileID: 9203660587171034692}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Zeme
   m_TagString: Untagged
   m_Icon: {fileID: 0}
