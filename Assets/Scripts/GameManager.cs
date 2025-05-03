@@ -41,10 +41,17 @@ public class GameManager : MonoBehaviour
     bool passedBlackoutZone = false;
     //bool screenIsBlack = false;
     bool startScreenBlackout = false;
-    Vector3 velocity = Vector3.zero;
+    Vector3 gravityVelocity = Vector3.zero;
     float groundCheckDistance = 0.5f;
     bool grounded = false;
     float gravity = -1.5f;
+    public float maxJumpPower = 3f;
+    float jumpPower = 0.0f;
+    float velocityConst = 0.01f;
+    Vector3 characterLastPos;
+    Vector3 characterVelocity;
+    Vector3 jumpingVelocity;
+    bool jumping = false;
 
     [NonSerialized] public bool proClimbingMode = false;
     Difficulty difficulty = Difficulty.Easy;
@@ -54,6 +61,8 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        characterLastPos = characterController.transform.position;
+        characterVelocity = characterController.velocity;
         leaderboardManager.LoadLeaderboard();
         Reload();
     }
@@ -61,14 +70,11 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        CalculateCharacterVelocity();
+        //Debug.Log(characterVelocity);
         UpdateClimbingStateVariables();
 
-        //if (isClimbing)
-        //{
-        //    UpdateCameraCollisionScreen();
-        //}
-
-        if (startedClimb && proClimbingMode) 
+        if (startedClimb && proClimbingMode)
         {
             TimerIncrease();
         }
@@ -101,6 +107,12 @@ public class GameManager : MonoBehaviour
         UpdateLimitMovement();
     }
 
+    void CalculateCharacterVelocity()
+    {
+        characterVelocity = characterController.transform.position - characterLastPos;
+        characterLastPos = characterController.transform.position;
+    }
+
     void TimerIncrease()
     {
         timerCntr += Time.deltaTime;
@@ -128,27 +140,6 @@ public class GameManager : MonoBehaviour
             characterController.Move(moveVector);
         }
     }
-
-    //void UpdateCameraCollisionScreen()
-    //{
-    //    detector.CallDetection();
-    //    if (detector.colliderHits.Count > 0)
-    //    {
-    //        if (!screenIsBlack)
-    //        {
-    //            screenIsBlack = true;
-    //            camera.GetComponent<BlackoutFade>().TurnBlack();
-    //        }
-    //    }
-    //    else
-    //    {
-    //        if (screenIsBlack)
-    //        {
-    //            screenIsBlack = false;
-    //            camera.GetComponent<BlackoutFade>().TurnClear();
-    //        }
-    //    }
-    //}
 
     void Reload()
     {
@@ -197,7 +188,8 @@ public class GameManager : MonoBehaviour
     {
         if (grounded || isClimbing)
         {
-            velocity = Vector3.zero;
+            gravityVelocity = Vector3.zero;
+            //characterVelocity = Vector3.zero;
             bool willCollideWithGround = Physics.Raycast(characterController.transform.position, Vector3.down, out RaycastHit hitInfo, groundCheckDistance);
 
             if (!willCollideWithGround || isClimbing)
@@ -207,23 +199,38 @@ public class GameManager : MonoBehaviour
         }
         else if (!grounded)
         {
-            velocity.y += gravity * Time.deltaTime;
-            Vector3 nextPos = characterController.transform.position + (velocity * Time.deltaTime);
+            gravityVelocity.y += gravity * Time.deltaTime;
+            Vector3 nextPos = characterController.transform.position + (gravityVelocity * Time.deltaTime);
 
             bool willCollideWithGround = Physics.Raycast(nextPos, Vector3.down, out RaycastHit hitInfo, groundCheckDistance);
 
             if (willCollideWithGround)
             {
                 // Set Player to the ground
-                velocity.y = -Math.Abs(hitInfo.point.y - characterController.transform.position.y) + characterController.skinWidth;
-                characterController.Move(velocity);
-                velocity = Vector3.zero;
+                gravityVelocity.y = -Math.Abs(hitInfo.point.y - characterController.transform.position.y) + characterController.skinWidth;
+                characterController.Move(gravityVelocity);
+                gravityVelocity = Vector3.zero;
+
                 grounded = true;
+                jumping = false;
             }
             else
             {
-                // Keep falling
-                characterController.Move(velocity * Time.deltaTime);
+                if (jumping)
+                {
+                    characterController.Move(Time.deltaTime * jumpingVelocity * jumpPower + gravityVelocity / 2);
+
+                    jumpPower += gravity * Time.deltaTime;
+                    if (jumpPower < 0.0f)
+                        jumpPower = 0.0f;
+
+                    //if (jumpingVelocity.y > 0)
+                    //    jumpingVelocity += gravityVelocity / 2;
+                }
+                else
+                {
+                    characterController.Move(jumpingVelocity + gravityVelocity);
+                }
             }
         }
     }
@@ -259,5 +266,23 @@ public class GameManager : MonoBehaviour
     public void ChangeDifficulty(int diff)
     {
        difficulty = (Difficulty)diff;
+    }
+
+    float CalculateLengthOfVelocityVector()
+    {
+        return (float) Math.Sqrt(Math.Pow(characterVelocity.x, 2) + Math.Pow(characterVelocity.y, 2) + Math.Pow(characterVelocity.z, 2));
+    }
+    public void Jump()
+    {
+        float length = CalculateLengthOfVelocityVector();
+        if (length < velocityConst || characterVelocity.y < 0.0f)
+        {
+            jumpingVelocity = characterVelocity.normalized;
+            return;
+        }
+        jumpingVelocity = characterVelocity.normalized;
+        jumpingVelocity = new Vector3(jumpingVelocity.x / 2, jumpingVelocity.y * 2f, jumpingVelocity.z / 2);
+        jumpPower = length * maxJumpPower;
+        jumping = true;
     }
 }

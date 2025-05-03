@@ -13,6 +13,7 @@ namespace UnityEngine.XR.Interaction.Toolkit
     [AddComponentMenu("XR/Locomotion/Climb Provider", 11)]
     public class MyClimbProvider : LocomotionProvider
     {
+        [SerializeField] GameManager gameManager;
         // These are parallel lists, where each interactor and its grabbed interactable share the same index in each list.
         // The last item in each list represents the most recent selection, which is the only one that actually drives movement.
         readonly List<Transform> m_GrabbingInteractors = new List<Transform>();
@@ -223,13 +224,11 @@ namespace UnityEngine.XR.Interaction.Toolkit
         void StepClimbMovement()
         {
             var xrOrigin = system.xrOrigin?.Origin;
-            var playerRigidBody = characterController.attachedRigidbody;
             if (xrOrigin != null)
             {
                 // Move rig such that climb interactor position stays constant
                 var rigTransform = xrOrigin.transform;
                 Vector3 movement = Vector3.zero;
-                //float drag = 0;
 
                 for (int i = 0; i < m_GrabbedClimbables.Count; i++)
                 {
@@ -261,36 +260,12 @@ namespace UnityEngine.XR.Interaction.Toolkit
 
                         movement += climbTransform.TransformVector(movementInClimbSpace);
                     }
-                    //drag += GetDrag(m_GrabbingInteractors[i]);
                 }
 
                 movement /= m_GrabbingInteractors.Count;
-                //movement *= climbForce;
-
-                //drag /= m_GrabbingInteractors.Count;
-
-                //characterController.attachedRigidbody.AddForce(movement, ForceMode.Acceleration);
-                //characterController.attachedRigidbody.AddForce(drag * -characterController.attachedRigidbody.velocity * climbDrag, ForceMode.Acceleration);
-
                 rigTransform.position += movement;
             }
         }
-
-        //float GetDrag(Transform currentInteractor)
-        //{
-        //    var controller = currentInteractor.parent.GetComponent<XRController>();
-
-        //    if (controller != null && controller.inputDevice.TryGetFeatureValue(CommonUsages.deviceVelocity, out Vector3 velocity))
-        //    {
-        //        float drag = 1 / velocity.magnitude + 0.01f;
-        //        drag = drag > 1 ? 1 : drag;
-        //        drag = drag < 0.03f ? 0.03f : drag;
-        //        return drag;
-        //    }
-        //    Debug.Log("Controller is null");
-        //    return 0;
-        //}
-
         public void FinishLocomotion()
         {
             EndLocomotion();
@@ -299,6 +274,8 @@ namespace UnityEngine.XR.Interaction.Toolkit
             m_GrabbedClimbables.Clear();
             m_InteractorAnchorClimbSpacePosition.Clear();
             m_InteractorAnchorWorldPosition.Clear();
+            Debug.Log("JUMP");
+            gameManager.Jump();
         }
 
         ClimbSettings GetActiveClimbSettings(MyClimbInteractable climbInteractable)

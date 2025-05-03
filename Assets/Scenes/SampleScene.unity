@@ -17082,7 +17082,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4294967295
   m_InteractionLayers:
-    m_Bits: 4294967295
+    m_Bits: 1
   m_AttachTransform: {fileID: 0}
   m_KeepSelectedTargetValid: 1
   m_DisableVisualsWhenBlockedInGroup: 1
@@ -34204,6 +34204,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_System: {fileID: 1213543962}
+  gameManager: {fileID: 1177263637}
   characterController: {fileID: 30403229}
   m_ClimbSettings:
     m_UseConstant: 1
@@ -43687,6 +43688,7 @@ MonoBehaviour:
   blackoutZone: {fileID: 1399289926}
   topAchor: {fileID: 2121964958}
   timer: {fileID: 1031487003}
+  maxJumpPower: 3
 --- !u!4 &1177263638
 Transform:
   m_ObjectHideFlags: 0
@@ -73119,7 +73121,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4294967295
   m_InteractionLayers:
-    m_Bits: 4294967295
+    m_Bits: 1
   m_AttachTransform: {fileID: 0}
   m_KeepSelectedTargetValid: 1
   m_DisableVisualsWhenBlockedInGroup: 1
