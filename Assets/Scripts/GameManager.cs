@@ -29,7 +29,6 @@ public class GameManager : MonoBehaviour
     [SerializeField] Transform blackoutZone;
     [SerializeField] GameObject topAchor;
     [SerializeField] GameObject climbWallBase;
-    [SerializeField] LayerMask rayCastCharacter;
 
     [NonSerialized] public bool isClimbing = false;
     [NonSerialized] public bool finishedClimb = false;
@@ -54,7 +53,7 @@ public class GameManager : MonoBehaviour
     List<Vector3> characterLastPos = new List<Vector3>();
     int velocityAvrgCnt = 5;
     Vector3 characterVelocity;
-    Vector3 directionVelocity = Vector3.zero;
+    public Vector3 directionVelocity = Vector3.zero;
     bool jumping = false;
 
     [NonSerialized] public bool proClimbingMode = false;
@@ -111,7 +110,7 @@ public class GameManager : MonoBehaviour
         }
 
         topAchor.GetComponent<Collider>().enabled = isClimbing ? true : false;
-        ApplyGravity();
+        MovePlayer();
         UpdateLimitMovement();
     }
 
@@ -196,7 +195,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    void ApplyGravity()
+    void MovePlayer()
     {
         if (jumping)
         {

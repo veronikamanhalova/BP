@@ -1085,6 +1085,7 @@ GameObject:
   - component: {fileID: 30403225}
   - component: {fileID: 30403229}
   - component: {fileID: 30403230}
+  - component: {fileID: 30403231}
   m_Layer: 0
   m_Name: XR Origin (XR Rig)
   m_TagString: Untagged
@@ -1181,6 +1182,24 @@ MonoBehaviour:
   m_LocomotionProvider: {fileID: 439468205}
   m_MinHeight: 0
   m_MaxHeight: Infinity
+--- !u!114 &30403231
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 30403224}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d72d7e6d3a9b5c418dfb47c51412bdb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CameraTransform: {fileID: 1099696947}
+  pushbackObject: {fileID: 1117746724}
+  layer:
+    serializedVersion: 2
+    m_Bits: 64
+  gameManager: {fileID: 1177263637}
 --- !u!1001 &35040586
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -38690,6 +38709,7 @@ Transform:
   m_Children:
   - {fileID: 2121964959}
   - {fileID: 992925633}
+  - {fileID: 1117746725}
   - {fileID: 574105002}
   - {fileID: 1594957194}
   - {fileID: 2017816125}
@@ -43313,6 +43333,68 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1116354041}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1117746724
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1117746725}
+  - component: {fileID: 1117746727}
+  - component: {fileID: 1117746726}
+  m_Layer: 6
+  m_Name: WallCore
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1117746725
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1117746724}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.53, y: 14.37, z: 5.02}
+  m_LocalScale: {x: 0.76959336, y: 27.659231, z: 0.76959336}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1000477035}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &1117746726
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1117746724}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!33 &1117746727
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1117746724}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &1117936594
 GameObject:
   m_ObjectHideFlags: 0
@@ -46092,11 +46174,9 @@ MonoBehaviour:
   blackoutZone: {fileID: 1399289926}
   topAchor: {fileID: 2121964958}
   climbWallBase: {fileID: 417047709}
-  rayCastCharacter:
-    serializedVersion: 2
-    m_Bits: 0
   timer: {fileID: 1031487003}
   maxJumpPower: 3
+  directionVelocity: {x: 0, y: 0, z: 0}
 --- !u!4 &1177263638
 Transform:
   m_ObjectHideFlags: 0

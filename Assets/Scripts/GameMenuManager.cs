@@ -12,7 +12,7 @@ public class GameMenuManager : MonoBehaviour
     [SerializeField] private Transform cameraTransform;
     public InputActionProperty showMenuButton;
     bool showMenu = true;
-    float distance = 1.0f;
+    float distance = 2.0f;
     Vector2 menuSize;
 
     private void Start()
