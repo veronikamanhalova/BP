@@ -11,10 +11,10 @@ GameObject:
   - component: {fileID: 6614492786789233717}
   - component: {fileID: 1499023978717624529}
   - component: {fileID: 1019620998970282812}
-  - component: {fileID: 90196477294135038}
   - component: {fileID: 6980553013226153519}
   - component: {fileID: 2588341584554933312}
-  m_Layer: 0
+  - component: {fileID: 3160842248818423858}
+  m_Layer: 9
   m_Name: Hold4
   m_TagString: HorizontalHold
   m_Icon: {fileID: 0}
@@ -88,28 +88,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &90196477294135038
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4399811406447502615}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: -2432090755550338912, guid: 90fccbdc97d0f36428699772a842c142, type: 3}
 --- !u!54 &6980553013226153519
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -254,6 +232,29 @@ MonoBehaviour:
   attachPoints:
   - {fileID: 7281293743258328137}
   gameManager: {fileID: 0}
+--- !u!136 &3160842248818423858
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4399811406447502615}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.05965007
+  m_Height: 0.38788
+  m_Direction: 0
+  m_Center: {x: 0.00020590425, y: 0.0009204075, z: 0.01881995}
 --- !u!1 &4592378167356735386
 GameObject:
   m_ObjectHideFlags: 0
@@ -263,7 +264,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7281293743258328137}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: AttachPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}

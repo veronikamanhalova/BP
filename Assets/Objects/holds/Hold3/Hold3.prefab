@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8069141858232163220}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: AttachPoint (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -42,10 +42,10 @@ GameObject:
   - component: {fileID: 7170607361545774769}
   - component: {fileID: 3135995940111413466}
   - component: {fileID: 4183779570640452918}
-  - component: {fileID: 6293336917303896069}
   - component: {fileID: 7755512684839877437}
   - component: {fileID: 2466923324762149363}
-  m_Layer: 0
+  - component: {fileID: 2871774397884324464}
+  m_Layer: 9
   m_Name: Hold3
   m_TagString: VerticalHold
   m_Icon: {fileID: 0}
@@ -120,28 +120,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &6293336917303896069
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7435384889810178110}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: -2432090755550338912, guid: a166e759c41b2e84abb285c63a7b84d4, type: 3}
 --- !u!54 &7755512684839877437
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -287,6 +265,29 @@ MonoBehaviour:
   - {fileID: 4381086718842633227}
   - {fileID: 8069141858232163220}
   gameManager: {fileID: 0}
+--- !u!136 &2871774397884324464
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7435384889810178110}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.06042853
+  m_Height: 0.40836015
+  m_Direction: 0
+  m_Center: {x: 0.00084784627, y: 0.0075527057, z: 0.023461744}
 --- !u!1 &8051593216285048007
 GameObject:
   m_ObjectHideFlags: 0
@@ -296,7 +297,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4381086718842633227}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: AttachPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}

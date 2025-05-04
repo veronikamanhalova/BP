@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8562905835667099134}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: AttachPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -45,7 +45,7 @@ GameObject:
   - component: {fileID: 3719049614638614930}
   - component: {fileID: 6894013576479310447}
   - component: {fileID: 626217721638422318}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Hold1
   m_TagString: HorizontalHold
   m_Icon: {fileID: 0}
@@ -296,7 +296,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7879043735714459041}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: AttachPoint (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}

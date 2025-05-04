@@ -11,10 +11,10 @@ GameObject:
   - component: {fileID: 6199112927129584505}
   - component: {fileID: 6697592434859015616}
   - component: {fileID: 3187046609363038527}
-  - component: {fileID: 2310206782986586728}
   - component: {fileID: 4075417882577567583}
   - component: {fileID: 2169132904032884995}
-  m_Layer: 0
+  - component: {fileID: -1471965426611100275}
+  m_Layer: 9
   m_Name: Hold2
   m_TagString: HorizontalHold
   m_Icon: {fileID: 0}
@@ -89,28 +89,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &2310206782986586728
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4331584890589161670}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: -2432090755550338912, guid: bc0c71dfcda7b0f4cab06fc93f795143, type: 3}
 --- !u!54 &4075417882577567583
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -256,6 +234,29 @@ MonoBehaviour:
   - {fileID: 920733628402204417}
   - {fileID: 4121157521013238206}
   gameManager: {fileID: 0}
+--- !u!136 &-1471965426611100275
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4331584890589161670}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.05717481
+  m_Height: 0.388273
+  m_Direction: 0
+  m_Center: {x: -0.0012294948, y: 0.008265987, z: 0.035045348}
 --- !u!1 &8784847349364437499
 GameObject:
   m_ObjectHideFlags: 0
@@ -265,7 +266,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 920733628402204417}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: AttachPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -296,7 +297,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4121157521013238206}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: AttachPoint (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}

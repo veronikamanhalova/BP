@@ -21,12 +21,15 @@ public class GameManager : MonoBehaviour
     [SerializeField] CharacterController characterController;
     [SerializeField] GameObject leftControllerStamina;
     [SerializeField] GameObject rightControllerStamina;
+    [SerializeField] GameObject leftInteractor;
+    [SerializeField] GameObject rightInteractor;
     [SerializeField] MyClimbProvider climbProvider;
     [SerializeField] GameObject startPos;
     [SerializeField] GameObject camera;
     [SerializeField] DetectHeadCollision detector;
     [SerializeField] Transform blackoutZone;
     [SerializeField] GameObject topAchor;
+    [SerializeField] GameObject climbWallBase;
     [SerializeField] LayerMask rayCastCharacter;
 
     [NonSerialized] public bool isClimbing = false;
@@ -156,10 +159,8 @@ public class GameManager : MonoBehaviour
 
     void Reload()
     {
-        Vector3 moveVector = startPos.transform.position - characterController.transform.position;
-
-        // Move the character instantly
-        characterController.Move(moveVector);
+        // Move the character to the startPos
+        characterController.Move(startPos.transform.position - characterController.transform.position);
         //characterController.transform.rotation = startPos.transform.rotation;
 
         // Reset climb states
@@ -174,6 +175,9 @@ public class GameManager : MonoBehaviour
         timerCntr = 0.0f;
         foreach (ControllerStamina stamina in characterController.GetComponentsInChildren<ControllerStamina>())
             stamina.staminaVal = 100.0f;
+
+        leftInteractor.SetActive(true);
+        rightInteractor.SetActive(true);
     }
 
     void UpdateClimbingStateVariables()
@@ -194,6 +198,8 @@ public class GameManager : MonoBehaviour
             startScreenBlackout = true;
             failedClimb = true;
             passedBlackoutZone = false;
+            leftInteractor.SetActive(false);
+            rightInteractor.SetActive(false);
         }
     }
 
@@ -220,7 +226,7 @@ public class GameManager : MonoBehaviour
         else if (grounded)
         {
             Vector3 characterPos = characterController.transform.position;
-            bool willCollideWithGround = Physics.Raycast(characterPos, Vector3.down, out RaycastHit hitInfo, groundCheckDistance, rayCastCharacter);
+            bool willCollideWithGround = Physics.Raycast(characterPos, Vector3.down, out RaycastHit hitInfo, groundCheckDistance);
 
             if (!willCollideWithGround)
             {
@@ -235,14 +241,24 @@ public class GameManager : MonoBehaviour
         {
             gravityVelocity.y += gravity * Time.deltaTime;
             Vector3 nextPos = characterController.transform.position;
-            bool willCollideWithGround = Physics.Raycast(nextPos, Vector3.down, out RaycastHit hitInfo, groundCheckDistance, rayCastCharacter);
+            bool willCollideWithGround = Physics.Raycast(nextPos, Vector3.down, out RaycastHit hitInfo, groundCheckDistance);
 
             // Raycast nefunguje kdyz se origin nachazi v stejne colideru, dame hrace o kuse vejs a strelime raycast
             nextPos.y -= gravity * Time.deltaTime;
-            bool isInsideCollider = Physics.Raycast(nextPos, Vector3.down, out RaycastHit hitInfo2, groundCheckDistance, rayCastCharacter);
+            bool isInsideCollider = Physics.Raycast(nextPos, Vector3.down, out RaycastHit hitInfo2, groundCheckDistance);
+
+            // Colliding Base
+            bool isCollidingBase = false;
+            Collider[] colliders = Physics.OverlapSphere(characterController.transform.position, 0.3f);
+            foreach (var col in colliders)
+            {
+                if (col.gameObject == climbWallBase)
+                    isCollidingBase = true;
+            }
 
             if (willCollideWithGround)
             {
+                // Will collide with ground
                 // Set Player to the ground
                 float moveDown = -Math.Abs(hitInfo.point.y - characterController.transform.position.y) + characterController.skinWidth;
                 characterController.Move(new Vector3(0.0f, moveDown, 0.0f));
@@ -252,14 +268,22 @@ public class GameManager : MonoBehaviour
             }
             else if (isInsideCollider)
             {
+                // Collider is inside characterController
                 characterController.Move(nextPos - characterController.transform.position);
 
                 gravityVelocity = Vector3.zero;
                 grounded = true;
             }
+            else if (isCollidingBase)
+            {
+                // Colliding with base
+                gravityVelocity = Vector3.zero;
+                grounded = true;
+            }
             else
             {
-                Vector3 sidewaysVelocity = new Vector3(directionVelocity.x, 0, directionVelocity.z); // tohle se nepouziva
+                // Falling
+                Vector3 sidewaysVelocity = new Vector3(directionVelocity.x / 2f, 0, directionVelocity.z / 2f);
 
                 characterController.Move(sidewaysVelocity + gravityVelocity * Time.deltaTime);
 

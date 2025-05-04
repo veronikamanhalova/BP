@@ -14976,6 +14976,68 @@ Transform:
   - {fileID: 690898768}
   m_Father: {fileID: 85626500}
   m_LocalEulerAnglesHint: {x: 0, y: -61.038, z: 0}
+--- !u!1 &417047709
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 417047710}
+  - component: {fileID: 417047712}
+  - component: {fileID: 417047711}
+  m_Layer: 0
+  m_Name: Base
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &417047710
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 417047709}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.55, y: 0.25, z: 5.001}
+  m_LocalScale: {x: 2.010997, y: 0.5057008, z: 2.015827}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1000477035}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &417047711
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 417047709}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!33 &417047712
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 417047709}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1001 &419142795
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -36724,6 +36786,7 @@ Transform:
   - {fileID: 1589152806}
   - {fileID: 1159382687}
   - {fileID: 1772952912}
+  - {fileID: 417047710}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1003649725
@@ -39397,7 +39460,7 @@ GameObject:
   - component: {fileID: 1063349162}
   - component: {fileID: 1063349165}
   - component: {fileID: 1063349166}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Direct Interactor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -43681,12 +43744,15 @@ MonoBehaviour:
   characterController: {fileID: 30403229}
   leftControllerStamina: {fileID: 47725423}
   rightControllerStamina: {fileID: 621030345}
+  leftInteractor: {fileID: 1988336434}
+  rightInteractor: {fileID: 1063349160}
   climbProvider: {fileID: 917565169}
   startPos: {fileID: 1100381688}
   camera: {fileID: 1099696946}
   detector: {fileID: 1099696953}
   blackoutZone: {fileID: 1399289926}
   topAchor: {fileID: 2121964958}
+  climbWallBase: {fileID: 417047709}
   rayCastCharacter:
     serializedVersion: 2
     m_Bits: 256
@@ -74642,7 +74708,7 @@ GameObject:
   - component: {fileID: 1988336436}
   - component: {fileID: 1988336439}
   - component: {fileID: 1988336440}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Direct Interactor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
