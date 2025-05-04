@@ -78,7 +78,6 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         CalculateCharacterVelocity();
-        //Debug.Log(characterVelocity);
         UpdateClimbingStateVariables();
 
         if (isClimbing && proClimbingMode)
@@ -203,7 +202,6 @@ public class GameManager : MonoBehaviour
         {
             characterController.Move(directionVelocity * jumpPower);
             jumpPower += gravity * 3 * Time.deltaTime;
-            Debug.Log("Jumping");
             if (jumpPower < 0.0f)
             {
                 jumpPower = 0.0f;
@@ -215,7 +213,6 @@ public class GameManager : MonoBehaviour
         else if (isClimbing)
         {
             grounded = false;
-            Debug.Log("Climbing");
         }
         else if (grounded)
         {
@@ -229,7 +226,6 @@ public class GameManager : MonoBehaviour
                 gravityVelocity = Vector3.zero;
             }
             gravityVelocity = Vector3.zero;
-            Debug.Log("Grounded");
         }
         else if (!grounded)
         {
@@ -280,8 +276,6 @@ public class GameManager : MonoBehaviour
                 Vector3 sidewaysVelocity = new Vector3(directionVelocity.x / 2f, 0, directionVelocity.z / 2f);
 
                 characterController.Move(sidewaysVelocity + gravityVelocity * Time.deltaTime);
-
-                Debug.Log("Falling");
             }
         }
     }
