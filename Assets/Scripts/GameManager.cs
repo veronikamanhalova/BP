@@ -26,7 +26,6 @@ public class GameManager : MonoBehaviour
     [SerializeField] MyClimbProvider climbProvider;
     [SerializeField] GameObject startPos;
     [SerializeField] GameObject camera;
-    [SerializeField] DetectHeadCollision detector;
     [SerializeField] Transform blackoutZone;
     [SerializeField] GameObject topAchor;
     [SerializeField] GameObject climbWallBase;
@@ -34,20 +33,21 @@ public class GameManager : MonoBehaviour
 
     [NonSerialized] public bool isClimbing = false;
     [NonSerialized] public bool finishedClimb = false;
+    [NonSerialized] public bool grounded = false;
 
     public TextMeshProUGUI timer;
     float timerCntr = 0.0f;
     float minutes = 0.0f;
     float seconds = 0.0f;
 
-    [NonSerialized] public bool startedClimb = false;
+    //[NonSerialized] public bool startedClimb = false;
     bool failedClimb = false;
+
     bool passedBlackoutZone = false;
-    //bool screenIsBlack = false;
     bool startScreenBlackout = false;
+
     Vector3 gravityVelocity = Vector3.zero;
     float groundCheckDistance = 0.2f;
-    bool grounded = false;
     float gravity = -1.5f;
     public float maxJumpPower = 3f;
     float jumpPower = 0.0f;
@@ -81,13 +81,15 @@ public class GameManager : MonoBehaviour
         //Debug.Log(characterVelocity);
         UpdateClimbingStateVariables();
 
-        if (startedClimb && proClimbingMode)
+        if (isClimbing && proClimbingMode)
         {
             TimerIncrease();
         }
 
         if (startScreenBlackout)
         {
+            leftInteractor.SetActive(false);
+            rightInteractor.SetActive(false);
             camera.GetComponent<BlackoutFade>().Fade();
             startScreenBlackout = false;
         }
@@ -167,7 +169,6 @@ public class GameManager : MonoBehaviour
         isClimbing = false;
         finishedClimb = false;
         failedClimb = false;
-        startedClimb = false;
 
         passedBlackoutZone = false;
         startScreenBlackout = false;
@@ -188,18 +189,11 @@ public class GameManager : MonoBehaviour
         if (characterController.transform.position.y > blackoutZone.transform.position.y)
             passedBlackoutZone = true;
 
-        if (!prevClimbingState && isClimbing)
-        {
-            startedClimb = true;
-        }
-
         if (!isClimbing && !grounded && passedBlackoutZone && characterController.transform.position.y <= blackoutZone.transform.position.y)
         {
             startScreenBlackout = true;
             failedClimb = true;
             passedBlackoutZone = false;
-            leftInteractor.SetActive(false);
-            rightInteractor.SetActive(false);
         }
     }
 
