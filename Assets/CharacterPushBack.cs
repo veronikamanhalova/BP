@@ -31,9 +31,13 @@ public class CharacterPushBack : MonoBehaviour
     {
         if (IsColliding())
         {
-            Debug.Log("Colliding");
             Vector3 moveVecDir = (new Vector3 (characterController.transform.position.x, 0.0f, characterController.transform.position.z) - new Vector3 (pushbackObject.transform.position.x, 0.0f, pushbackObject.transform.position.z)).normalized;
             gameManager.directionVelocity = Vector3.zero;
+            gameManager.characterVelocity = Vector3.zero;
+            for (int i = 0; i < gameManager.characterLastPos.Count; i++)
+            {
+                gameManager.characterLastPos[i] = Vector3.zero;
+            }
             characterController.Move(moveVecDir * pushbackStrength);
         }
     }

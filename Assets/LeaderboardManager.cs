@@ -4,16 +4,18 @@ using UnityEngine;
 using static UnityEngine.Rendering.DebugUI.Table;
 using TMPro;
 using static UnityEngine.Rendering.DebugUI;
+using UnityEngine.UI;
 
 public struct BoardEntry
 {
-    public BoardEntry(string n, float t, Difficulty diff) { name = n; time = t; difficulty = diff; }
+    public BoardEntry(string n, string t, Difficulty diff) { name = n; time = t; difficulty = diff; }
     public string name;
-    public float time;
+    public string time;
     public Difficulty difficulty;
 }
 public class LeaderboardManager : MonoBehaviour
 {
+    [SerializeField] NameTagPage nameTagPage;
     [SerializeField] GameObject leaderboardTable;
     [SerializeField] GameObject row;
     List<BoardEntry> entries = new List<BoardEntry>();
@@ -45,21 +47,26 @@ public class LeaderboardManager : MonoBehaviour
     {
         entries.Add(entry);
     }
+
+    public void SetLastEntryNameFromInputField()
+    {
+        BoardEntry lastEntry = entries[entries.Count - 1];
+        lastEntry.name = nameTagPage.GetInputFieldName();
+        entries[entries.Count - 1] = lastEntry;
+    }
+
     public void ShowEntries()
     {
         DestroyRows();
+        Debug.Log(entries.Count);
         entries.Sort((a, b) => a.time.CompareTo(b.time));
-        for (int i = 1; i < entries.Count && i <= 10; i++)
+        for (int i = 0; i < entries.Count && i < 10; i++)
         {
             GameObject newEntry = Instantiate(row, leaderboardTable.transform);
             TextMeshProUGUI[] entryDetails = newEntry.GetComponentsInChildren<TextMeshProUGUI>();
-            entryDetails[0].text = "" + i;
+            entryDetails[0].text = "" + (i+1);
             entryDetails[1].text = entries[i].name;
-
-            int minutes = Mathf.FloorToInt(entries[i].time / 60.0f);
-            int seconds = Mathf.FloorToInt(entries[i].time - minutes * 60.0f);
-            entryDetails[2].text = string.Format("{0:00}:{1:00}", minutes, seconds);
-
+            entryDetails[2].text = entries[i].time;
             entryDetails[3].text = entries[i].difficulty.ToString();
         }
     }

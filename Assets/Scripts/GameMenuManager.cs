@@ -11,6 +11,7 @@ public class GameMenuManager : MonoBehaviour
     [SerializeField] GameObject gameMenuPage;
     [SerializeField] GameObject settingsPage;
     [SerializeField] GameObject leaderboardPage;
+    [SerializeField] GameObject nameTagPage;
     [SerializeField] GameManager gameManager;
     [SerializeField] private Transform cameraTransform;
     public InputActionProperty showMenuButton;
@@ -59,9 +60,18 @@ public class GameMenuManager : MonoBehaviour
             gameMenuPage.SetActive(true);
             settingsPage.SetActive(false);
             leaderboardPage.SetActive(false);
+            nameTagPage.SetActive(false);
         }
 
         showMenu = !showMenu;
         gameMenuParent.SetActive(showMenu);
+    }
+
+    public void ShowEndClimbPage(string time)
+    {
+        ToggleMenuVisibility();
+        gameMenuPage.SetActive(false);
+        nameTagPage.SetActive(true);
+        nameTagPage.GetComponent<NameTagPage>().SetEndTime(time);
     }
 }

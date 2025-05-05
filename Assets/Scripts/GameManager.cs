@@ -7,6 +7,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.UI;
+using System.Linq;
 public enum Difficulty
 {
     Easy,
@@ -25,14 +26,14 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject rightInteractor;
     [SerializeField] MyClimbProvider climbProvider;
     [SerializeField] GameObject startPos;
-    [SerializeField] GameObject camera;
+    [SerializeField] GameObject mainCamera;
     [SerializeField] Transform blackoutZone;
     [SerializeField] GameObject topAchor;
     [SerializeField] GameObject climbWallBase;
 
     [NonSerialized] public bool isClimbing = false;
-    [NonSerialized] public bool finishedClimb = false;
     [NonSerialized] public bool grounded = false;
+    bool finishedClimb = false;
 
     public TextMeshProUGUI timer;
     float timerCntr = 0.0f;
@@ -50,16 +51,14 @@ public class GameManager : MonoBehaviour
     float gravity = -1.5f;
     public float maxJumpPower = 3f;
     float jumpPower = 0.0f;
-    List<Vector3> characterLastPos = new List<Vector3>();
+    [NonSerialized] public List<Vector3> characterLastPos = new List<Vector3>();
     int velocityAvrgCnt = 5;
-    Vector3 characterVelocity;
-    public Vector3 directionVelocity = Vector3.zero;
+    [NonSerialized] public Vector3 characterVelocity;
+    [NonSerialized] public Vector3 directionVelocity = Vector3.zero;
     bool jumping = false;
 
     [NonSerialized] public bool proClimbingMode = false;
     Difficulty difficulty = Difficulty.Easy;
-
-    int cntr = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -87,7 +86,7 @@ public class GameManager : MonoBehaviour
         {
             leftInteractor.SetActive(false);
             rightInteractor.SetActive(false);
-            camera.GetComponent<BlackoutFade>().Fade();
+            mainCamera.GetComponent<BlackoutFade>().Fade();
             startScreenBlackout = false;
         }
 
@@ -98,6 +97,12 @@ public class GameManager : MonoBehaviour
         else if (grounded)
         {
             timerCntr = 0.0f;
+        }
+
+        if (finishedClimb)
+        {
+            finishedClimb = false;
+            StartCoroutine(finishClimb());
         }
 
         topAchor.GetComponent<Collider>().enabled = isClimbing ? true : false;
@@ -123,9 +128,10 @@ public class GameManager : MonoBehaviour
     void TimerIncrease()
     {
         timerCntr += Time.deltaTime;
+
         minutes = Mathf.FloorToInt(timerCntr / 60.0f);
         seconds = Mathf.FloorToInt(timerCntr - minutes * 60.0f);
-        timer.text = string.Format("{0:00}:{1:00}",minutes,seconds);
+        timer.text = TimeToFormatedString();
     }
 
     void UpdateLimitMovement()
@@ -152,7 +158,6 @@ public class GameManager : MonoBehaviour
     {
         // Move the character to the startPos
         characterController.Move(startPos.transform.position - characterController.transform.position);
-        //characterController.transform.rotation = startPos.transform.rotation;
 
         // Reset climb states
         isClimbing = false;
@@ -270,18 +275,22 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void finishClimb()
+    public void SetFinishedClimb()
     {
         finishedClimb = true;
+    }
+
+    public IEnumerator finishClimb()
+    {
+        yield return new WaitForSeconds(5);
 
         climbProvider.FinishLocomotion();
 
         if (proClimbingMode)
         {
-            BoardEntry boardEntry = new BoardEntry("Anon" + cntr, timerCntr, difficulty);
-            cntr++;
+            BoardEntry boardEntry = new BoardEntry("Anon", TimeToFormatedString(), difficulty);
             leaderboardManager.AddLeaderboardEntry(boardEntry);
-            leaderboardManager.AddLeaderboardEntry(boardEntry);
+            gameMenuManager.ShowEndClimbPage(boardEntry.time);
         }
     }
 
@@ -309,6 +318,11 @@ public class GameManager : MonoBehaviour
     public void ChangeDifficulty(int diff)
     {
        difficulty = (Difficulty)diff;
+    }
+
+    string TimeToFormatedString()
+    {
+        return string.Format("{0:00}:{1:00}", minutes, seconds);
     }
 
     float CalculateLengthOfVelocityVector(Vector3 vec)
