@@ -241,6 +241,9 @@ namespace UnityEngine.XR.Interaction.Toolkit
 
             interactor.parent.GetComponent<HandPhysics>().ClimbGrabUnfixHand();
 
+            if (m_ClimbProvider != null)
+                m_ClimbProvider.FinishClimbGrab(interactor);
+
             if (gameManager.proClimbingMode)
                 interactor.GetComponent<ControllerStamina>().EndStamina();
         }

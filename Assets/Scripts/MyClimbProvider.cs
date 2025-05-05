@@ -136,22 +136,8 @@ namespace UnityEngine.XR.Interaction.Toolkit
         {
             var climbTransform = climbInteractable.climbTransform;
 
-            if (m_InteractorAnchorClimbSpacePosition.Count == 2)
-            {
-                Vector3 tmpWorldPos = m_InteractorAnchorWorldPosition[1];
-                Vector3 tmpClimbPos = m_InteractorAnchorClimbSpacePosition[1];
-
-                m_InteractorAnchorWorldPosition[0] = tmpWorldPos;
-                m_InteractorAnchorClimbSpacePosition[0] = tmpClimbPos;
-
-                m_InteractorAnchorWorldPosition[1] = interactor.position;
-                m_InteractorAnchorClimbSpacePosition[1] = climbTransform.InverseTransformPoint(m_InteractorAnchorWorldPosition[1]);
-            }
-            else
-            {
-                m_InteractorAnchorWorldPosition.Add(interactor.position);
-                m_InteractorAnchorClimbSpacePosition.Add(climbTransform.InverseTransformPoint(m_InteractorAnchorWorldPosition[m_InteractorAnchorWorldPosition.Count - 1]));
-            }
+            m_InteractorAnchorWorldPosition.Add(interactor.position);
+            m_InteractorAnchorClimbSpacePosition.Add(climbTransform.InverseTransformPoint(m_InteractorAnchorWorldPosition[m_InteractorAnchorWorldPosition.Count - 1]));
 
             //climbAnchorUpdated?.Invoke(this);
         }
@@ -203,7 +189,7 @@ namespace UnityEngine.XR.Interaction.Toolkit
             List<GameObject> InteractorToDeactivate = new List<GameObject>();
             List<GameObject> InteractableToDeactivate = new List<GameObject>();
 
-            for (int i = 0; i < m_GrabbedClimbables.Count; i++)
+            for (int i = 0; i < m_GrabbingInteractors.Count; i++)
             {
                 if (m_GrabbingInteractors[i].parent.transform.gameObject.GetComponent<XRBaseController>().activateInteractionState.deactivatedThisFrame && m_GrabbingInteractors[i].gameObject.GetComponent<XRDirectInteractor>().hasHover == false)
                 {
@@ -214,7 +200,6 @@ namespace UnityEngine.XR.Interaction.Toolkit
 
             for (int i = 0; i < InteractorToDeactivate.Count; i++)
             {
-                FinishClimbGrab(InteractorToDeactivate[i].transform);
                 DeactivateEventArgs deactivateEventArgs = new DeactivateEventArgs();
                 deactivateEventArgs.interactorObject = InteractorToDeactivate[i].GetComponent<XRDirectInteractor>();
                 deactivateEventArgs.interactableObject = InteractableToDeactivate[i].GetComponent<MyClimbInteractable>();
