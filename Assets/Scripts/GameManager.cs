@@ -69,7 +69,6 @@ public class GameManager : MonoBehaviour
             characterLastPos.Add(characterController.transform.position);
         }
         characterVelocity = characterController.velocity;
-        leaderboardManager.LoadLeaderboard();
         Reload();
     }
 
@@ -99,14 +98,6 @@ public class GameManager : MonoBehaviour
         else if (grounded)
         {
             timerCntr = 0.0f;
-        }
-
-        if (finishedClimb)
-        {
-            BoardEntry boardEntry = new BoardEntry("Anon" + cntr, timerCntr);
-            cntr++;
-            leaderboardManager.leaderboard.AddLeaderboardEntry(boardEntry);
-            leaderboardManager.ShowLeaderboard();
         }
 
         topAchor.GetComponent<Collider>().enabled = isClimbing ? true : false;
@@ -284,6 +275,14 @@ public class GameManager : MonoBehaviour
         finishedClimb = true;
 
         climbProvider.FinishLocomotion();
+
+        if (proClimbingMode)
+        {
+            BoardEntry boardEntry = new BoardEntry("Anon" + cntr, timerCntr, difficulty);
+            cntr++;
+            leaderboardManager.AddLeaderboardEntry(boardEntry);
+            leaderboardManager.AddLeaderboardEntry(boardEntry);
+        }
     }
 
     public void newGame()

@@ -7,7 +7,10 @@ using UnityEngine.InputSystem;
 
 public class GameMenuManager : MonoBehaviour
 {
-    public GameObject gameMenu;
+    public GameObject gameMenuParent;
+    [SerializeField] GameObject gameMenuPage;
+    [SerializeField] GameObject settingsPage;
+    [SerializeField] GameObject leaderboardPage;
     [SerializeField] GameManager gameManager;
     [SerializeField] private Transform cameraTransform;
     public InputActionProperty showMenuButton;
@@ -17,8 +20,8 @@ public class GameMenuManager : MonoBehaviour
 
     private void Start()
     {
-        gameMenu.SetActive(showMenu);
-        RectTransform gameMenuTransform = gameMenu.GetComponent<RectTransform>();
+        gameMenuParent.SetActive(showMenu);
+        RectTransform gameMenuTransform = gameMenuParent.GetComponent<RectTransform>();
         menuSize = gameMenuTransform.rect.size;
         menuSize.x *= gameMenuTransform.lossyScale.x;
         menuSize.y *= gameMenuTransform.lossyScale.y;
@@ -26,7 +29,6 @@ public class GameMenuManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
         if (showMenuButton.action.WasPressedThisFrame() && gameManager.grounded)
         {
            ToggleMenuVisibility();
@@ -48,12 +50,18 @@ public class GameMenuManager : MonoBehaviour
                 return;
             }
 
-            gameMenu.transform.position = spawnPosition;
-            gameMenu.transform.LookAt(new Vector3(cameraTransform.position.x, gameMenu.transform.position.y, cameraTransform.position.z));
-            gameMenu.transform.forward *= -1;
+            gameMenuParent.transform.position = spawnPosition;
+            gameMenuParent.transform.LookAt(new Vector3(cameraTransform.position.x, gameMenuParent.transform.position.y, cameraTransform.position.z));
+            gameMenuParent.transform.forward *= -1;
+        }
+        else
+        {
+            gameMenuPage.SetActive(true);
+            settingsPage.SetActive(false);
+            leaderboardPage.SetActive(false);
         }
 
         showMenu = !showMenu;
-        gameMenu.SetActive(showMenu);
+        gameMenuParent.SetActive(showMenu);
     }
 }
