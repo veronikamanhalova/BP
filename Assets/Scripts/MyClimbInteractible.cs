@@ -177,7 +177,7 @@ namespace UnityEngine.XR.Interaction.Toolkit
                 m_ClimbProvider.StartClimbGrab(this, interactor);
 
             if (gameManager.proClimbingMode)
-                interactor.GetComponent<ControllerStamina>().StartStamina();
+                interactor.parent.GetComponent<ControllerStamina>().StartStamina();
         }
 
         /// <inheritdoc />
@@ -193,7 +193,7 @@ namespace UnityEngine.XR.Interaction.Toolkit
                 m_ClimbProvider.FinishClimbGrab(interactor);
 
             if (gameManager.proClimbingMode)
-                interactor.GetComponent<ControllerStamina>().EndStamina();
+                interactor.parent.GetComponent<ControllerStamina>().EndStamina();
         }
 
         protected override void OnActivated(ActivateEventArgs args)
@@ -214,7 +214,7 @@ namespace UnityEngine.XR.Interaction.Toolkit
                 m_ClimbProvider.StartClimbGrab(this, interactor);
 
             if (gameManager.proClimbingMode)
-                interactor.GetComponent<ControllerStamina>().StartStamina();
+                interactor.parent.GetComponent<ControllerStamina>().StartStamina();
         }
 
         /// <inheritdoc />
@@ -230,7 +230,7 @@ namespace UnityEngine.XR.Interaction.Toolkit
                 m_ClimbProvider.FinishClimbGrab(interactor);
 
             if (gameManager.proClimbingMode)
-                interactor.GetComponent<ControllerStamina>().EndStamina();
+                interactor.parent.GetComponent<ControllerStamina>().EndStamina();
         }
 
         public void DeactivateHold(DeactivateEventArgs args)
@@ -245,7 +245,7 @@ namespace UnityEngine.XR.Interaction.Toolkit
                 m_ClimbProvider.FinishClimbGrab(interactor);
 
             if (gameManager.proClimbingMode)
-                interactor.GetComponent<ControllerStamina>().EndStamina();
+                interactor.parent.GetComponent<ControllerStamina>().EndStamina();
         }
 
         Transform FindClosestAttachPoint(Transform interactor)

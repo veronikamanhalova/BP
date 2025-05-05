@@ -27356,8 +27356,8 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 689854890}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMin: {x: 0.75, y: 0}
+  m_AnchorMax: {x: 0.75, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -43398,7 +43398,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1063349161}
   - component: {fileID: 1063349162}
-  - component: {fileID: 1063349165}
   - component: {fileID: 1063349166}
   m_Layer: 7
   m_Name: Direct Interactor
@@ -43512,20 +43511,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1
   m_PhysicsTriggerInteraction: 1
---- !u!114 &1063349165
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1063349160}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 10231104b03681f49bb242def9284974, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  climbProvider: {fileID: 917565169}
-  staminaBar: {fileID: 1837281636}
 --- !u!135 &1063349166
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -43591,6 +43576,7 @@ GameObject:
   - component: {fileID: 1063890286}
   - component: {fileID: 1063890291}
   - component: {fileID: 1063890292}
+  - component: {fileID: 1063890293}
   m_Layer: 0
   m_Name: Left Controller
   m_TagString: Untagged
@@ -43865,6 +43851,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hand: {fileID: 719593123}
+--- !u!114 &1063890293
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1063890285}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10231104b03681f49bb242def9284974, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  climbProvider: {fileID: 917565169}
+  interactor: {fileID: 1988336435}
+  handModel: {fileID: 1063890292}
+  staminaBar: {fileID: 1220349884}
 --- !u!1 &1073746550
 GameObject:
   m_ObjectHideFlags: 0
@@ -48341,40 +48343,35 @@ MonoBehaviour:
   m_GameObject: {fileID: 1173359589}
   m_Enabled: 0
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0bf296fc962d7184ab14ad1841598d5f, type: 3}
+  m_Script: {fileID: 11500000, guid: 919e39492806b334982b6b84c90dd927, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_System: {fileID: 1213543962}
-  m_MoveSpeed: 1
-  m_EnableStrafe: 1
-  m_EnableFly: 0
-  m_UseGravity: 0
-  m_GravityApplicationMode: 0
-  m_ForwardSource: {fileID: 0}
-  m_LeftHandMoveAction:
+  m_TurnSpeed: 60
+  m_LeftHandTurnAction:
     m_UseReference: 0
     m_Action:
-      m_Name: Left Hand Move
+      m_Name: Left Hand Turn
       m_Type: 0
       m_ExpectedControlType: Vector2
-      m_Id: f80de237-ce13-4e76-9952-4bd2cbcbb557
+      m_Id: 9bd5edc2-14af-4b26-8412-493264359d02
       m_Processors: 
       m_Interactions: 
       m_SingletonActionBindings: []
       m_Flags: 0
     m_Reference: {fileID: 0}
-  m_RightHandMoveAction:
-    m_UseReference: 0
+  m_RightHandTurnAction:
+    m_UseReference: 1
     m_Action:
-      m_Name: Right Hand Move
+      m_Name: Right Hand Turn
       m_Type: 0
       m_ExpectedControlType: Vector2
-      m_Id: f01d8711-4471-463c-b784-6ff272dc5421
+      m_Id: 0d9360eb-7f5d-4a89-bb8a-185906166d3b
       m_Processors: 
       m_Interactions: 
       m_SingletonActionBindings: []
       m_Flags: 0
-    m_Reference: {fileID: 0}
+    m_Reference: {fileID: -6493913391331992944, guid: c348712bda248c246b8c49b3db54643f, type: 3}
 --- !u!1 &1174145894
 GameObject:
   m_ObjectHideFlags: 0
@@ -58797,7 +58794,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1413014310
 RectTransform:
   m_ObjectHideFlags: 0
@@ -59769,6 +59766,7 @@ GameObject:
   - component: {fileID: 1441502319}
   - component: {fileID: 1441502324}
   - component: {fileID: 1441502325}
+  - component: {fileID: 1441502326}
   m_Layer: 0
   m_Name: Right Controller
   m_TagString: Untagged
@@ -60035,6 +60033,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hand: {fileID: 512086530}
+--- !u!114 &1441502326
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1441502318}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10231104b03681f49bb242def9284974, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  climbProvider: {fileID: 917565169}
+  interactor: {fileID: 1063349161}
+  handModel: {fileID: 1441502325}
+  staminaBar: {fileID: 1837281636}
 --- !u!1 &1441997476
 GameObject:
   m_ObjectHideFlags: 0
@@ -64109,7 +64123,7 @@ RectTransform:
   m_Father: {fileID: 1252551618}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 0.75, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -83146,7 +83160,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1988336435}
   - component: {fileID: 1988336436}
-  - component: {fileID: 1988336439}
   - component: {fileID: 1988336440}
   m_Layer: 7
   m_Name: Direct Interactor
@@ -83260,20 +83273,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1
   m_PhysicsTriggerInteraction: 1
---- !u!114 &1988336439
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1988336434}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 10231104b03681f49bb242def9284974, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  climbProvider: {fileID: 917565169}
-  staminaBar: {fileID: 1220349884}
 --- !u!135 &1988336440
 SphereCollider:
   m_ObjectHideFlags: 0

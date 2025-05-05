@@ -8,6 +8,8 @@ using UnityEngine.XR.Interaction.Toolkit;
 public class ControllerStamina : MonoBehaviour
 {
     [SerializeField] MyClimbProvider climbProvider;
+    [SerializeField] Transform interactor;
+    [SerializeField] HandPhysics handModel;
     [SerializeField] Image staminaBar;
     [NonSerialized] public float staminaVal = 100.0f;
     float maxStaminaVal = 100.0f;
@@ -21,13 +23,14 @@ public class ControllerStamina : MonoBehaviour
             staminaVal -= Time.deltaTime * 10;
             if (staminaVal < 0)
             {
+                climbProvider.FinishClimbGrab(interactor);
+                handModel.ClimbGrabUnfixHand();
                 EndStamina();
-                climbProvider.FinishClimbGrab(transform);
             }
 
             if (staminaVal < maxStaminaVal / 5)
             {
-                GetComponent<XRDirectInteractor>().SendHapticImpulse(0.2f,1.0f);
+                GetComponentInChildren<XRDirectInteractor>().SendHapticImpulse(0.2f,1.0f);
             }
         }
         else
