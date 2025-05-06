@@ -107,11 +107,11 @@ public class GameManager : MonoBehaviour
             StartCoroutine(finishClimb());
         }
 
-        //if (teleporting && grounded)
-        //{
-        //    teleporting = false;
-        //    //topCage.SetActive(true);
-        //}
+        if (teleporting && grounded)
+        {
+            teleporting = false;
+            //topCage.SetActive(true);
+        }
 
         topAchor.GetComponent<Collider>().enabled = isClimbing ? true : false;
         MovePlayer();
@@ -290,22 +290,25 @@ public class GameManager : MonoBehaviour
         finishedClimb = true;
     }
 
-    //public void SetTeleportingStage()
-    //{
-    //    teleporting = true;
-    //}
+    public void SetTeleportingStage()
+    {
+        Debug.Log("Teleport requested");
+        teleporting = true;
+    }
 
     public IEnumerator finishClimb()
     {
         yield return new WaitForSeconds(5);
-
-        climbProvider.FinishLocomotion();
 
         if (proClimbingMode)
         {
             BoardEntry boardEntry = new BoardEntry("Anon", TimeToFormatedString(), difficulty);
             leaderboardManager.AddLeaderboardEntry(boardEntry);
             gameMenuManager.ShowEndClimbPage(boardEntry.time);
+        }
+        else
+        {
+            gameMenuManager.ToggleMenuVisibility();
         }
     }
 

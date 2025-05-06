@@ -23,9 +23,7 @@ public class ControllerStamina : MonoBehaviour
             staminaVal -= Time.deltaTime * 10;
             if (staminaVal < 0)
             {
-                climbProvider.FinishClimbGrab(interactor);
                 EndHandClimbing();
-                EndStamina();
             }
 
             if (staminaVal < maxStaminaVal / 5)
@@ -45,6 +43,8 @@ public class ControllerStamina : MonoBehaviour
 
     public void EndHandClimbing()
     {
+        climbProvider.FinishClimbGrab(interactor);
+
         handModel.ClimbGrabUnfixHand();
 
         if (handIsClimbing)
