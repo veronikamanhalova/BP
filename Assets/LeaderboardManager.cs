@@ -19,6 +19,7 @@ public class LeaderboardManager : MonoBehaviour
     [SerializeField] GameObject leaderboardTable;
     [SerializeField] GameObject row;
     List<BoardEntry> entries = new List<BoardEntry>();
+    int maxEntriesSize = 10;
 
     private void Start()
     {
@@ -27,7 +28,7 @@ public class LeaderboardManager : MonoBehaviour
 
     public void SaveLeaderboard()
     {
-        string json = JsonUtility.ToJson(entries);
+        string json = JsonUtility.ToJson(entries.GetRange(0,maxEntriesSize-1));
         System.IO.File.WriteAllText(Application.persistentDataPath + "/leaderboard.json", json);
     }
 
@@ -58,9 +59,20 @@ public class LeaderboardManager : MonoBehaviour
     public void ShowEntries()
     {
         DestroyRows();
-        Debug.Log(entries.Count);
-        entries.Sort((a, b) => a.time.CompareTo(b.time));
-        for (int i = 0; i < entries.Count && i < 10; i++)
+        entries.Sort((a, b) =>
+        {
+            // First sort by difficulty (Hard > Medium > Easy)
+            int diffA = (int)a.difficulty;
+            int diffB = (int)b.difficulty;
+
+            if (diffA != diffB)
+                return diffB.CompareTo(diffA); // Reverse to get Hard first
+
+            // If same difficulty, sort by time (smaller is better)
+            return a.time.CompareTo(b.time);
+        });
+        //entries.Sort((a, b) => a.time.CompareTo(b.time));
+        for (int i = 0; i < entries.Count && i < maxEntriesSize; i++)
         {
             GameObject newEntry = Instantiate(row, leaderboardTable.transform);
             TextMeshProUGUI[] entryDetails = newEntry.GetComponentsInChildren<TextMeshProUGUI>();
