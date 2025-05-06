@@ -30,7 +30,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] Transform blackoutZone;
     [SerializeField] GameObject topAchor;
     [SerializeField] GameObject climbWallBase;
-    [SerializeField] GameObject topCage;
+    [SerializeField] AudioSource screamAudioSource;
+    [SerializeField] AudioSource yesAudioSource;
 
     [NonSerialized] public bool isClimbing = false;
     [NonSerialized] public bool grounded = false;
@@ -110,7 +111,7 @@ public class GameManager : MonoBehaviour
         if (teleporting && grounded)
         {
             teleporting = false;
-            //topCage.SetActive(true);
+            yesAudioSource.Play();
         }
 
         topAchor.GetComponent<Collider>().enabled = isClimbing ? true : false;
@@ -164,8 +165,6 @@ public class GameManager : MonoBehaviour
 
     void Reload()
     {
-        //topCage.SetActive(false);
-
         // Teleport the character to the startPos
         startPos.RequestTeleport();
 
@@ -198,6 +197,7 @@ public class GameManager : MonoBehaviour
             startScreenBlackout = true;
             failedClimb = true;
             passedBlackoutZone = false;
+            screamAudioSource.Play();
         }
     }
 
@@ -292,13 +292,12 @@ public class GameManager : MonoBehaviour
 
     public void SetTeleportingStage()
     {
-        Debug.Log("Teleport requested");
         teleporting = true;
     }
 
     public IEnumerator finishClimb()
     {
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(0.5f);
 
         if (proClimbingMode)
         {
