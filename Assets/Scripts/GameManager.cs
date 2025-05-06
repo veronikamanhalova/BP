@@ -25,7 +25,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject leftInteractor;
     [SerializeField] GameObject rightInteractor;
     [SerializeField] MyClimbProvider climbProvider;
-    [SerializeField] GameObject startPos;
+    [SerializeField] TeleportationAnchor startPos;
     [SerializeField] GameObject mainCamera;
     [SerializeField] Transform blackoutZone;
     [SerializeField] GameObject topAchor;
@@ -166,8 +166,8 @@ public class GameManager : MonoBehaviour
     {
         //topCage.SetActive(false);
 
-        // Move the character to the startPos
-        characterController.Move(startPos.transform.position - characterController.transform.position);
+        // Teleport the character to the startPos
+        startPos.RequestTeleport();
 
         // Reset climb states
         isClimbing = false;
