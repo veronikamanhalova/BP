@@ -47,8 +47,7 @@ public class ControllerStamina : MonoBehaviour
 
         handModel.ClimbGrabUnfixHand();
 
-        if (handIsClimbing)
-            EndStamina();
+        EndStamina();
     }
 
     public void StartStamina()

@@ -21239,6 +21239,7 @@ MonoBehaviour:
   gameMenuParent: {fileID: 1284572471}
   gameMenuPage: {fileID: 1267124305}
   settingsPage: {fileID: 1413014309}
+  tutorialPage: {fileID: 1470121369}
   leaderboardPage: {fileID: 346885951}
   nameTagPage: {fileID: 902148038}
   gameManager: {fileID: 1177263637}
@@ -24501,6 +24502,14 @@ PrefabInstance:
       propertyPath: m_FirstHoverEntered.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 4590807484820961950, guid: 5c07a94741e529448a61b1305dd108f7, type: 3}
+      propertyPath: gameManager
+      value: 
+      objectReference: {fileID: 1177263637}
+    - target: {fileID: 4590807484820961950, guid: 5c07a94741e529448a61b1305dd108f7, type: 3}
+      propertyPath: m_ClimbProvider
+      value: 
+      objectReference: {fileID: 917565169}
     - target: {fileID: 4669338949378915389, guid: 5c07a94741e529448a61b1305dd108f7, type: 3}
       propertyPath: gameManager
       value: 
@@ -24577,6 +24586,14 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7319592312838296056, guid: 5c07a94741e529448a61b1305dd108f7, type: 3}
+      propertyPath: gameManager
+      value: 
+      objectReference: {fileID: 1177263637}
+    - target: {fileID: 7319592312838296056, guid: 5c07a94741e529448a61b1305dd108f7, type: 3}
+      propertyPath: m_ClimbProvider
+      value: 
+      objectReference: {fileID: 917565169}
     - target: {fileID: 7716832481437540973, guid: 5c07a94741e529448a61b1305dd108f7, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -52172,6 +52189,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6522381383129823409, guid: b4f8a7365fd743d4f98566031163419d, type: 3}
+      propertyPath: gameManager
+      value: 
+      objectReference: {fileID: 1177263637}
+    - target: {fileID: 6522381383129823409, guid: b4f8a7365fd743d4f98566031163419d, type: 3}
+      propertyPath: m_ClimbProvider
+      value: 
+      objectReference: {fileID: 917565169}
     - target: {fileID: 6790981301534635778, guid: b4f8a7365fd743d4f98566031163419d, type: 3}
       propertyPath: gameManager
       value: 
@@ -64337,7 +64362,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1470121370
 RectTransform:
   m_ObjectHideFlags: 0
@@ -69080,6 +69105,14 @@ PrefabInstance:
       propertyPath: m_FirstHoverEntered.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 2753091683629139067, guid: 76d1382b13378d3498fc168075e16e9e, type: 3}
+      propertyPath: gameManager
+      value: 
+      objectReference: {fileID: 1177263637}
+    - target: {fileID: 2753091683629139067, guid: 76d1382b13378d3498fc168075e16e9e, type: 3}
+      propertyPath: m_ClimbProvider
+      value: 
+      objectReference: {fileID: 917565169}
     - target: {fileID: 3055912281971318863, guid: 76d1382b13378d3498fc168075e16e9e, type: 3}
       propertyPath: gameManager
       value: 
@@ -88521,6 +88554,14 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+    - target: {fileID: 6026372113186875609, guid: 2772cddc4bfbdbf4f90e763a728f401b, type: 3}
+      propertyPath: gameManager
+      value: 
+      objectReference: {fileID: 1177263637}
+    - target: {fileID: 6026372113186875609, guid: 2772cddc4bfbdbf4f90e763a728f401b, type: 3}
+      propertyPath: m_ClimbProvider
+      value: 
+      objectReference: {fileID: 917565169}
     - target: {fileID: 7935631397311414665, guid: 2772cddc4bfbdbf4f90e763a728f401b, type: 3}
       propertyPath: gameManager
       value: 

@@ -10,6 +10,7 @@ public class GameMenuManager : MonoBehaviour
     public GameObject gameMenuParent;
     [SerializeField] GameObject gameMenuPage;
     [SerializeField] GameObject settingsPage;
+    [SerializeField] GameObject tutorialPage;
     [SerializeField] GameObject leaderboardPage;
     [SerializeField] GameObject nameTagPage;
     [SerializeField] GameManager gameManager;
@@ -61,6 +62,7 @@ public class GameMenuManager : MonoBehaviour
             settingsPage.SetActive(false);
             leaderboardPage.SetActive(false);
             nameTagPage.SetActive(false);
+            tutorialPage.SetActive(false);
         }
 
         showMenu = !showMenu;
