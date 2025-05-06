@@ -32,6 +32,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject climbWallBase;
     [SerializeField] AudioSource screamAudioSource;
     [SerializeField] AudioSource yesAudioSource;
+    [SerializeField] AudioSource jumpAudioSource;
 
     [NonSerialized] public bool isClimbing = false;
     [NonSerialized] public bool grounded = false;
@@ -42,7 +43,6 @@ public class GameManager : MonoBehaviour
     float minutes = 0.0f;
     float seconds = 0.0f;
 
-    //[NonSerialized] public bool startedClimb = false;
     bool failedClimb = false;
 
     bool passedBlackoutZone = false;
@@ -349,7 +349,12 @@ public class GameManager : MonoBehaviour
     public void Jump()
     {
         directionVelocity = new Vector3(characterVelocity.x / 3f, characterVelocity.y * 3f, characterVelocity.z / 3f);
-        jumpPower = Mathf.Clamp(CalculateLengthOfVelocityVector(directionVelocity) * maxJumpPower, 0, maxJumpPower);
+        float velocityVecLength = CalculateLengthOfVelocityVector(directionVelocity);
+
+        if (velocityVecLength > 0.3f)
+            jumpAudioSource.Play();
+
+        jumpPower = Mathf.Clamp(velocityVecLength * maxJumpPower, 0, maxJumpPower);
         jumping = true;
     }
 }
