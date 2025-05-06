@@ -30,6 +30,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] Transform blackoutZone;
     [SerializeField] GameObject topAchor;
     [SerializeField] GameObject climbWallBase;
+    [SerializeField] GameObject topCage;
 
     [NonSerialized] public bool isClimbing = false;
     [NonSerialized] public bool grounded = false;
@@ -56,6 +57,7 @@ public class GameManager : MonoBehaviour
     [NonSerialized] public Vector3 characterVelocity;
     [NonSerialized] public Vector3 directionVelocity = Vector3.zero;
     bool jumping = false;
+    bool teleporting = false;
 
     [NonSerialized] public bool proClimbingMode = false;
     Difficulty difficulty = Difficulty.Easy;
@@ -104,6 +106,12 @@ public class GameManager : MonoBehaviour
             finishedClimb = false;
             StartCoroutine(finishClimb());
         }
+
+        //if (teleporting && grounded)
+        //{
+        //    teleporting = false;
+        //    //topCage.SetActive(true);
+        //}
 
         topAchor.GetComponent<Collider>().enabled = isClimbing ? true : false;
         MovePlayer();
@@ -156,6 +164,8 @@ public class GameManager : MonoBehaviour
 
     void Reload()
     {
+        //topCage.SetActive(false);
+
         // Move the character to the startPos
         characterController.Move(startPos.transform.position - characterController.transform.position);
 
@@ -279,6 +289,11 @@ public class GameManager : MonoBehaviour
     {
         finishedClimb = true;
     }
+
+    //public void SetTeleportingStage()
+    //{
+    //    teleporting = true;
+    //}
 
     public IEnumerator finishClimb()
     {

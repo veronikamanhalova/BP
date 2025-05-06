@@ -24,7 +24,7 @@ public class ControllerStamina : MonoBehaviour
             if (staminaVal < 0)
             {
                 climbProvider.FinishClimbGrab(interactor);
-                handModel.ClimbGrabUnfixHand();
+                EndHandClimbing();
                 EndStamina();
             }
 
@@ -41,6 +41,14 @@ public class ControllerStamina : MonoBehaviour
         }
 
         staminaBar.fillAmount = staminaVal / 100;
+    }
+
+    public void EndHandClimbing()
+    {
+        handModel.ClimbGrabUnfixHand();
+
+        if (handIsClimbing)
+            EndStamina();
     }
 
     public void StartStamina()

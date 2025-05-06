@@ -8,6 +8,7 @@ using UnityEngine.XR.OpenXR.Features.Interactions;
 public class HandPhysics : MonoBehaviour
 {
     [SerializeField] GameObject hand;
+
     public void ClimbGrabFixHand(Transform attachPoint)
     {
         hand.transform.SetParent(attachPoint, false);

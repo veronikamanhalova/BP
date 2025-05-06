@@ -17856,10 +17856,9 @@ MonoBehaviour:
   m_HoverEntered:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2121964960}
-        m_TargetAssemblyTypeName: UnityEngine.XR.Interaction.Toolkit.TeleportationAnchor,
-          Unity.XR.Interaction.Toolkit
-        m_MethodName: RequestTeleport
+      - m_Target: {fileID: 1063890293}
+        m_TargetAssemblyTypeName: ControllerStamina, Assembly-CSharp
+        m_MethodName: EndHandClimbing
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -17894,7 +17893,7 @@ MonoBehaviour:
       m_Calls: []
   m_SelectActionTrigger: 1
   m_HideControllerOnSelect: 0
-  m_AllowHoveredActivate: 0
+  m_AllowHoveredActivate: 1
   m_TargetPriorityMode: 0
   m_PlayAudioClipOnSelectEntered: 0
   m_AudioClipForOnSelectEntered: {fileID: 0}
@@ -18081,7 +18080,7 @@ MonoBehaviour:
   m_EnableStrafe: 1
   m_EnableFly: 0
   m_UseGravity: 0
-  m_GravityApplicationMode: 1
+  m_GravityApplicationMode: 0
   m_ForwardSource: {fileID: 1099696947}
   m_LeftHandMoveAction:
     m_UseReference: 1
@@ -33902,10 +33901,9 @@ MonoBehaviour:
   m_HoverEntered:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2121964960}
-        m_TargetAssemblyTypeName: UnityEngine.XR.Interaction.Toolkit.TeleportationAnchor,
-          Unity.XR.Interaction.Toolkit
-        m_MethodName: RequestTeleport
+      - m_Target: {fileID: 1441502326}
+        m_TargetAssemblyTypeName: ControllerStamina, Assembly-CSharp
+        m_MethodName: EndHandClimbing
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -33940,7 +33938,7 @@ MonoBehaviour:
       m_Calls: []
   m_SelectActionTrigger: 1
   m_HideControllerOnSelect: 0
-  m_AllowHoveredActivate: 0
+  m_AllowHoveredActivate: 1
   m_TargetPriorityMode: 0
   m_PlayAudioClipOnSelectEntered: 0
   m_AudioClipForOnSelectEntered: {fileID: 0}
@@ -40699,6 +40697,7 @@ Transform:
   - {fileID: 1772952912}
   - {fileID: 417047710}
   - {fileID: 1701519399}
+  - {fileID: 1504152111}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1003649725
@@ -48494,10 +48493,11 @@ MonoBehaviour:
   rightInteractor: {fileID: 1063349160}
   climbProvider: {fileID: 917565169}
   startPos: {fileID: 1100381688}
-  mainCamera: {fileID: 0}
+  mainCamera: {fileID: 1099696946}
   blackoutZone: {fileID: 1399289926}
   topAchor: {fileID: 2121964958}
   climbWallBase: {fileID: 417047709}
+  topCage: {fileID: 1504152110}
   timer: {fileID: 1031487003}
   maxJumpPower: 3
 --- !u!4 &1177263638
@@ -62460,6 +62460,68 @@ Transform:
   - {fileID: 439434710}
   m_Father: {fileID: 1591421617}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1504152110
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1504152111}
+  - component: {fileID: 1504152113}
+  - component: {fileID: 1504152112}
+  m_Layer: 0
+  m_Name: TopCage
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &1504152111
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1504152110}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.54, y: 32.08, z: 4.99}
+  m_LocalScale: {x: 1.7211051, y: 6.1057925, z: 1.7211051}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1000477035}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &1504152112
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1504152110}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!33 &1504152113
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1504152110}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &1504429608
 GameObject:
   m_ObjectHideFlags: 0
@@ -89968,9 +90030,35 @@ MonoBehaviour:
   m_HoverEntered:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 2121964960}
+        m_TargetAssemblyTypeName: UnityEngine.XR.Interaction.Toolkit.TeleportationAnchor,
+          Unity.XR.Interaction.Toolkit
+        m_MethodName: RequestTeleport
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 1177263637}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
         m_MethodName: SetFinishedClimb
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 917565169}
+        m_TargetAssemblyTypeName: UnityEngine.XR.Interaction.Toolkit.MyClimbProvider,
+          Assembly-CSharp
+        m_MethodName: FinishLocomotion
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -90046,12 +90134,24 @@ MonoBehaviour:
   m_TeleportationProvider: {fileID: 228290940}
   m_MatchOrientation: 3
   m_MatchDirectionalInput: 0
-  m_TeleportTrigger: 1
+  m_TeleportTrigger: 2
   m_FilterSelectionByHitNormal: 0
   m_UpNormalToleranceDegrees: 30
   m_Teleporting:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1177263637}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: SetTeleportingStage
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_TeleportAnchorTransform: {fileID: 2121964959}
 --- !u!54 &2121964962
 Rigidbody:
