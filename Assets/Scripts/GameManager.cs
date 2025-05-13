@@ -1,13 +1,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
-using UnityEngine.UI;
-using System.Linq;
+
 public enum Difficulty
 {
     Easy,
@@ -33,6 +30,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] AudioSource screamAudioSource;
     [SerializeField] AudioSource yesAudioSource;
     [SerializeField] AudioSource jumpAudioSource;
+    [SerializeField] LayerMask climbHoldsLayer;
 
     [NonSerialized] public bool isClimbing = false;
     [NonSerialized] public bool grounded = false;
@@ -80,7 +78,7 @@ public class GameManager : MonoBehaviour
         CalculateCharacterVelocity();
         UpdateClimbingStateVariables();
 
-        if (isClimbing && proClimbingMode)
+        if ((isClimbing || jumping) && proClimbingMode)
         {
             TimerIncrease();
         }
@@ -105,6 +103,7 @@ public class GameManager : MonoBehaviour
         if (finishedClimb)
         {
             finishedClimb = false;
+            passedBlackoutZone = false;
             StartCoroutine(finishClimb());
         }
 
@@ -165,9 +164,6 @@ public class GameManager : MonoBehaviour
 
     void Reload()
     {
-        // Teleport the character to the startPos
-        startPos.RequestTeleport();
-
         // Reset climb states
         isClimbing = false;
         finishedClimb = false;
@@ -182,14 +178,16 @@ public class GameManager : MonoBehaviour
 
         leftInteractor.SetActive(true);
         rightInteractor.SetActive(true);
+
+        // Teleport the character to the startPos
+        startPos.RequestTeleport();
     }
 
     void UpdateClimbingStateVariables()
     {
-        bool prevClimbingState = isClimbing;
         isClimbing = climbProvider.climbAnchorInteractor != null;
 
-        if (characterController.transform.position.y > blackoutZone.transform.position.y)
+        if ((characterController.transform.position.y > blackoutZone.transform.position.y) && isClimbing)
             passedBlackoutZone = true;
 
         if (!isClimbing && !grounded && passedBlackoutZone && characterController.transform.position.y <= blackoutZone.transform.position.y)
@@ -223,6 +221,8 @@ public class GameManager : MonoBehaviour
         {
             Vector3 characterPos = characterController.transform.position;
             bool willCollideWithGround = Physics.Raycast(characterPos, Vector3.down, out RaycastHit hitInfo, groundCheckDistance);
+            if (willCollideWithGround && hitInfo.collider.gameObject.layer == climbHoldsLayer)
+                willCollideWithGround = false;
 
             if (!willCollideWithGround)
             {
@@ -237,10 +237,14 @@ public class GameManager : MonoBehaviour
             gravityVelocity.y += gravity * Time.deltaTime;
             Vector3 nextPos = characterController.transform.position;
             bool willCollideWithGround = Physics.Raycast(nextPos, Vector3.down, out RaycastHit hitInfo, groundCheckDistance);
+            if (willCollideWithGround && hitInfo.collider.gameObject.layer == climbHoldsLayer)
+                willCollideWithGround = false;
 
             // Raycast nefunguje kdyz se origin nachazi v stejne colideru, dame hrace o kuse vejs a strelime raycast
             nextPos.y -= gravity * Time.deltaTime;
             bool isInsideCollider = Physics.Raycast(nextPos, Vector3.down, out RaycastHit hitInfo2, groundCheckDistance);
+            if (isInsideCollider && hitInfo2.collider.gameObject.layer == climbHoldsLayer)
+                isInsideCollider = false;
 
             // Colliding Base
             bool isCollidingBase = false;
@@ -349,6 +353,9 @@ public class GameManager : MonoBehaviour
     public void Jump()
     {
         directionVelocity = new Vector3(characterVelocity.x / 3f, characterVelocity.y * 3f, characterVelocity.z / 3f);
+        if (directionVelocity.y > 0.8f)
+            directionVelocity.y = 0.8f;
+
         float velocityVecLength = CalculateLengthOfVelocityVector(directionVelocity);
 
         if (velocityVecLength > 0.3f)

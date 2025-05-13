@@ -1,7 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using Microsoft.MixedReality.Toolkit.Experimental.UI;
 using TMPro;
 
@@ -23,5 +20,10 @@ public class NameTagPage: MonoBehaviour
     public void SetEndTime(string time)
     {
         timeField.text = time;
+    }
+
+    public void EraseInputField()
+    {
+        inputField.text = string.Empty;
     }
 }

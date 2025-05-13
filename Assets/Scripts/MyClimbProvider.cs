@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine.Assertions;
 
@@ -21,10 +20,6 @@ namespace UnityEngine.XR.Interaction.Toolkit
 
         List<Vector3> m_InteractorAnchorWorldPosition = new List<Vector3>();
         List<Vector3> m_InteractorAnchorClimbSpacePosition = new List<Vector3>();
-
-        [SerializeField] CharacterController characterController;
-        //[SerializeField] float climbForce = 10f;
-        //[SerializeField] float climbDrag = 5f;
 
         [SerializeField]
         [Tooltip("Climb locomotion settings. Can be overridden by the Climb Interactable used for locomotion.")]
@@ -259,7 +254,6 @@ namespace UnityEngine.XR.Interaction.Toolkit
             m_GrabbedClimbables.Clear();
             m_InteractorAnchorClimbSpacePosition.Clear();
             m_InteractorAnchorWorldPosition.Clear();
-            Debug.Log("JUMP");
             gameManager.Jump();
         }
 

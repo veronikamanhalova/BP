@@ -1,10 +1,6 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEngine.Rendering.DebugUI.Table;
 using TMPro;
-using static UnityEngine.Rendering.DebugUI;
-using UnityEngine.UI;
 
 public struct BoardEntry
 {
@@ -54,6 +50,7 @@ public class LeaderboardManager : MonoBehaviour
         BoardEntry lastEntry = entries[entries.Count - 1];
         lastEntry.name = nameTagPage.GetInputFieldName();
         entries[entries.Count - 1] = lastEntry;
+        nameTagPage.EraseInputField();
     }
 
     public void ShowEntries()
