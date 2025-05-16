@@ -25,10 +25,12 @@ public class WallGenerator : MonoBehaviour
     {
         DestroyWall();
         difficultyIdx = (int)diff;
-        int generatedParts = 0;
-        int lastWallSideIdx = 0;
-        //Dirrection dirrection = Dirrection.Straight;
         dirrection = Dirrection.Straight;
+        int generatedParts = 1;
+        int lastWallSideIdx = 0;
+
+        GenerateFirstWallPard(lastWallSideIdx);
+
         while (generatedParts < wallParts)
         {
             int wallSideIdx;
@@ -105,6 +107,13 @@ public class WallGenerator : MonoBehaviour
             }
 
         }
+    }
+
+    void GenerateFirstWallPard(int wallSideIdx)
+    {
+        float YPos = wallStart;
+        Vector3 newPos = transform.parent.transform.position + new Vector3(position[wallSideIdx].x, YPos, position[wallSideIdx].z);
+        GenerateOnSameWallSide(newPos, wallSideIdx);
     }
 
     void GenerateOnRightWallSide(Vector3 newPos, int wallSideIdx)

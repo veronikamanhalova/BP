@@ -9,7 +9,7 @@ namespace UnityEngine.XR.Interaction.Toolkit
     /// movement constraints along each axis of the interactable.
     /// </summary>
     /// <seealso cref="ClimbInteractable"/>
-    [AddComponentMenu("XR/Locomotion/Climb Provider", 11)]
+    [AddComponentMenu("XR/Locomotion/My Climb Provider", 11)]
     public class MyClimbProvider : LocomotionProvider
     {
         [SerializeField] GameManager gameManager;
@@ -169,9 +169,12 @@ namespace UnityEngine.XR.Interaction.Toolkit
                 Assert.AreEqual(m_GrabbingInteractors.Count, m_GrabbedClimbables.Count);
 
                 // Deactivate interactors that are not currently hovering over the object but released trigger button
-                DeactivateNonHoveringInteractors();
+
+                // swapeed these 2 TODO check
 
                 StepClimbMovement();
+
+                DeactivateNonHoveringInteractors();
             }
             else if (locomotionPhase != LocomotionPhase.Idle)
             {
@@ -186,7 +189,8 @@ namespace UnityEngine.XR.Interaction.Toolkit
 
             for (int i = 0; i < m_GrabbingInteractors.Count; i++)
             {
-                if (m_GrabbingInteractors[i].parent.transform.gameObject.GetComponent<XRBaseController>().activateInteractionState.deactivatedThisFrame && m_GrabbingInteractors[i].gameObject.GetComponent<XRDirectInteractor>().hasHover == false)
+                ////&& m_GrabbingInteractors[i].gameObject.GetComponent<XRDirectInteractor>().hasHover == false)
+                if (m_GrabbingInteractors[i].parent.transform.gameObject.GetComponent<XRBaseController>().activateInteractionState.deactivatedThisFrame)
                 {
                     InteractorToDeactivate.Add(m_GrabbingInteractors[i].gameObject);
                     InteractableToDeactivate.Add(m_GrabbedClimbables[i].gameObject);

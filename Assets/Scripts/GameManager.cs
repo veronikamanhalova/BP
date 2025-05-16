@@ -32,7 +32,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] AudioSource jumpAudioSource;
     [SerializeField] LayerMask climbHoldsLayer;
 
-    [NonSerialized] public bool isClimbing = false;
+    [NonSerialized] public bool climbing = false;
     [NonSerialized] public bool grounded = false;
     bool finishedClimb = false;
 
@@ -78,7 +78,7 @@ public class GameManager : MonoBehaviour
         CalculateCharacterVelocity();
         UpdateClimbingStateVariables();
 
-        if ((isClimbing || jumping) && proClimbingMode)
+        if ((climbing || jumping) && proClimbingMode)
         {
             TimerIncrease();
         }
@@ -113,7 +113,7 @@ public class GameManager : MonoBehaviour
             yesAudioSource.Play();
         }
 
-        topAchor.GetComponent<Collider>().enabled = isClimbing ? true : false;
+        topAchor.GetComponent<Collider>().enabled = climbing ? true : false;
         MovePlayer();
         UpdateLimitMovement();
     }
@@ -165,7 +165,7 @@ public class GameManager : MonoBehaviour
     void Reload()
     {
         // Reset climb states
-        isClimbing = false;
+        climbing = false;
         finishedClimb = false;
         failedClimb = false;
 
@@ -185,12 +185,12 @@ public class GameManager : MonoBehaviour
 
     void UpdateClimbingStateVariables()
     {
-        isClimbing = climbProvider.climbAnchorInteractor != null;
+        climbing = climbProvider.climbAnchorInteractor != null;
 
-        if ((characterController.transform.position.y > blackoutZone.transform.position.y) && isClimbing)
+        if ((characterController.transform.position.y > blackoutZone.transform.position.y) && climbing)
             passedBlackoutZone = true;
 
-        if (!isClimbing && !grounded && passedBlackoutZone && characterController.transform.position.y <= blackoutZone.transform.position.y)
+        if (!climbing && !grounded && passedBlackoutZone && characterController.transform.position.y <= blackoutZone.transform.position.y)
         {
             startScreenBlackout = true;
             failedClimb = true;
@@ -213,7 +213,7 @@ public class GameManager : MonoBehaviour
                 grounded = false;
             }
         }
-        else if (isClimbing)
+        else if (climbing)
         {
             grounded = false;
         }

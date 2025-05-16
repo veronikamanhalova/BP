@@ -6,8 +6,9 @@ using UnityEngine.XR.Interaction.Toolkit;
 public class ControllerStamina : MonoBehaviour
 {
     [SerializeField] MyClimbProvider climbProvider;
+    [SerializeField] GameManager gameManager;
     [SerializeField] Transform interactor;
-    [SerializeField] HandPhysics handModel;
+    [SerializeField] HandModel handModel;
     [SerializeField] Image staminaBar;
     [NonSerialized] public float staminaVal = 100.0f;
     float maxStaminaVal = 100.0f;
@@ -50,11 +51,13 @@ public class ControllerStamina : MonoBehaviour
 
     public void StartStamina()
     {
-        handIsClimbing = true;
+        if (gameManager.proClimbingMode)
+            handIsClimbing = true;
     }
     public void EndStamina()
     {
-        handIsClimbing = false;
+        if (gameManager.proClimbingMode)
+            handIsClimbing = false;
     }
 
 }

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class HandPhysics : MonoBehaviour
+public class HandModel : MonoBehaviour
 {
     [SerializeField] GameObject hand;
 
