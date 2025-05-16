@@ -3,6 +3,7 @@ using UnityEngine;
 public class HandModel : MonoBehaviour
 {
     [SerializeField] GameObject hand;
+    [SerializeField] GameObject identifiers;
 
     public void ClimbGrabFixHand(Transform attachPoint)
     {

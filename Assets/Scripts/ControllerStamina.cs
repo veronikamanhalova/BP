@@ -14,7 +14,6 @@ public class ControllerStamina : MonoBehaviour
     float maxStaminaVal = 100.0f;
     bool handIsClimbing = false;
 
-    // Update is called once per frame
     void Update()
     {
         if (handIsClimbing)

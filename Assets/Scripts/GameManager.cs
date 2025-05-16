@@ -98,6 +98,7 @@ public class GameManager : MonoBehaviour
         else if (grounded)
         {
             timerCntr = 0.0f;
+            timer.text = string.Format("{0:00}:{1:00}", 0, 0);
         }
 
         if (finishedClimb)
@@ -172,8 +173,6 @@ public class GameManager : MonoBehaviour
         passedBlackoutZone = false;
         startScreenBlackout = false;
 
-        timerCntr = 0.0f;
-        timer.text = string.Format("{0:00}:{1:00}", minutes, seconds);
         foreach (ControllerStamina stamina in characterController.GetComponentsInChildren<ControllerStamina>())
             stamina.staminaVal = 100.0f;
 
@@ -204,6 +203,7 @@ public class GameManager : MonoBehaviour
     {
         if (jumping)
         {
+            // Jumping
             characterController.Move(directionVelocity * jumpPower);
             jumpPower += gravity * 3 * Time.deltaTime;
             if (jumpPower < 0.0f)
@@ -216,10 +216,12 @@ public class GameManager : MonoBehaviour
         }
         else if (climbing)
         {
+            // Climbing
             grounded = false;
         }
         else if (grounded)
         {
+            // Player is grounded
             Vector3 characterPos = characterController.transform.position;
             bool willCollideWithGround = Physics.Raycast(characterPos, Vector3.down, out RaycastHit hitInfo, groundCheckDistance);
             if (willCollideWithGround && hitInfo.collider.gameObject.layer == climbHoldsLayer)
@@ -235,13 +237,14 @@ public class GameManager : MonoBehaviour
         }
         else if (!grounded)
         {
+            // Player is not grounded
             gravityVelocity.y += gravity * Time.deltaTime;
             Vector3 nextPos = characterController.transform.position;
             bool willCollideWithGround = Physics.Raycast(nextPos, Vector3.down, out RaycastHit hitInfo, groundCheckDistance);
             if (willCollideWithGround && hitInfo.collider.gameObject.layer == climbHoldsLayer)
                 willCollideWithGround = false;
 
-            // Raycast nefunguje kdyz se origin nachazi v stejne colideru, dame hrace o kuse vejs a strelime raycast
+            // Check if the player is in ground
             nextPos.y -= gravity * Time.deltaTime;
             bool isInsideCollider = Physics.Raycast(nextPos, Vector3.down, out RaycastHit hitInfo2, groundCheckDistance);
             if (isInsideCollider && hitInfo2.collider.gameObject.layer == climbHoldsLayer)
@@ -258,7 +261,6 @@ public class GameManager : MonoBehaviour
 
             if (willCollideWithGround)
             {
-                // Will collide with ground
                 // Set Player to the ground
                 float moveDown = -Math.Abs(hitInfo.point.y - characterController.transform.position.y) + characterController.skinWidth;
                 characterController.Move(new Vector3(0.0f, moveDown, 0.0f));
@@ -354,8 +356,8 @@ public class GameManager : MonoBehaviour
     public void Jump()
     {
         directionVelocity = new Vector3(characterVelocity.x / 3f, characterVelocity.y * 3f, characterVelocity.z / 3f);
-        if (directionVelocity.y > 0.8f)
-            directionVelocity.y = 0.8f;
+        if (directionVelocity.y > 0.3f)
+            directionVelocity.y = 0.3f;
 
         float velocityVecLength = CalculateLengthOfVelocityVector(directionVelocity);
 

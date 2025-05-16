@@ -1816,18 +1816,18 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 47725423}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0.021}
+  m_LocalRotation: {x: -0, y: -0, z: -0.22278222, w: 0.97486824}
+  m_LocalPosition: {x: 0, y: 0, z: 0.017400093}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1031487005}
   - {fileID: 1857167600}
-  m_Father: {fileID: 1063890286}
+  m_Father: {fileID: 719593122}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0.059}
+  m_AnchoredPosition: {x: -0.010221858, y: 0.07043126}
   m_SizeDelta: {x: 1167, y: 276.80002}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &47725425
@@ -23353,7 +23353,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 3240524871626806228, guid: 534053b397750e74588f25f926e8da72, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 621030346}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 534053b397750e74588f25f926e8da72, type: 3}
 --- !u!4 &512086529 stripped
@@ -26238,7 +26241,7 @@ GameObject:
   - component: {fileID: 583958341}
   - component: {fileID: 583958340}
   m_Layer: 8
-  m_Name: Close menu
+  m_Name: Close menu button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -28030,17 +28033,17 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 621030345}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0.020999908}
+  m_LocalRotation: {x: -0, y: -0, z: 0.22278222, w: 0.97486824}
+  m_LocalPosition: {x: 0, y: 0, z: 0.017400093}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1916580408}
-  m_Father: {fileID: 1441502319}
+  m_Father: {fileID: 512086529}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0.059000015}
+  m_AnchoredPosition: {x: 0.010221858, y: 0.07043128}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &621030347
@@ -31327,7 +31330,7 @@ Light:
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 1
+    m_Type: 2
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 1
@@ -32409,7 +32412,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 7072478885644867327, guid: a543ce027c5ec3a4788c4f633673c3de, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 47725424}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a543ce027c5ec3a4788c4f633673c3de, type: 3}
 --- !u!4 &719593122 stripped
@@ -46939,7 +46945,6 @@ Transform:
   - {fileID: 1988336435}
   - {fileID: 825023459}
   - {fileID: 1949513930}
-  - {fileID: 47725424}
   - {fileID: 719593122}
   m_Father: {fileID: 709722763}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -47190,6 +47195,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hand: {fileID: 719593123}
+  identifiers: {fileID: 47725423}
 --- !u!114 &1063890293
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -47413,7 +47419,7 @@ GameObject:
   - component: {fileID: 1075741326}
   - component: {fileID: 1075741325}
   m_Layer: 8
-  m_Name: Exit game
+  m_Name: Exit game button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -51773,7 +51779,7 @@ GameObject:
   - component: {fileID: 1130520613}
   - component: {fileID: 1130520612}
   m_Layer: 8
-  m_Name: Leaderboard
+  m_Name: Leaderboard button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -66177,7 +66183,6 @@ Transform:
   - {fileID: 1063349161}
   - {fileID: 439307599}
   - {fileID: 455649542}
-  - {fileID: 621030346}
   - {fileID: 512086529}
   m_Father: {fileID: 709722763}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -66420,6 +66425,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hand: {fileID: 512086530}
+  identifiers: {fileID: 621030345}
 --- !u!114 &1441502326
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -69217,7 +69223,7 @@ GameObject:
   - component: {fileID: 1508650709}
   - component: {fileID: 1508650708}
   m_Layer: 8
-  m_Name: New game
+  m_Name: New game button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -82563,7 +82569,7 @@ MeshCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 5
-  m_Convex: 1
+  m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -5417380357783902720, guid: 21c8c45884e3fc0499405efa7ec2b23a, type: 3}
 --- !u!23 &1793672401
@@ -89677,7 +89683,7 @@ GameObject:
   - component: {fileID: 1948341940}
   - component: {fileID: 1948341939}
   m_Layer: 8
-  m_Name: Settings
+  m_Name: Settings button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -90405,7 +90411,7 @@ GameObject:
   - component: {fileID: 1953864930}
   - component: {fileID: 1953864929}
   m_Layer: 8
-  m_Name: Tutorial
+  m_Name: Tutorial button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -93207,7 +93213,7 @@ MeshCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 5
-  m_Convex: 1
+  m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -5417380357783902720, guid: 21c8c45884e3fc0499405efa7ec2b23a, type: 3}
 --- !u!23 &2005005498
@@ -104194,7 +104200,7 @@ MeshCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 5
-  m_Convex: 1
+  m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -5417380357783902720, guid: 21c8c45884e3fc0499405efa7ec2b23a, type: 3}
 --- !u!1 &6266450717464039735

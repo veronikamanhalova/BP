@@ -2,6 +2,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
+[System.Serializable]
+public class BoardEntryListWrapper
+{
+    public List<BoardEntry> entries;
+}
+
+[System.Serializable]
 public struct BoardEntry
 {
     public BoardEntry(string n, string t, Difficulty diff) { name = n; time = t; difficulty = diff; }
@@ -24,17 +31,19 @@ public class LeaderboardManager : MonoBehaviour
 
     public void SaveLeaderboard()
     {
-        string json = JsonUtility.ToJson(entries.GetRange(0,maxEntriesSize-1));
-        System.IO.File.WriteAllText(Application.persistentDataPath + "/leaderboard.json", json);
+        BoardEntryListWrapper boardList = new BoardEntryListWrapper();
+        boardList.entries = entries;
+        string json = JsonUtility.ToJson(boardList);
+        System.IO.File.WriteAllText(Application.persistentDataPath + "/leaderboard.txt", json);
     }
 
-    void LoadLeaderboard()
+    public void LoadLeaderboard()
     {
-        string path = Application.persistentDataPath + "/leaderboard.json";
+        string path = Application.persistentDataPath + "/leaderboard.txt";
         if (System.IO.File.Exists(path))
         {
             string json = System.IO.File.ReadAllText(path);
-            entries = JsonUtility.FromJson<List<BoardEntry>>(json);
+            entries = JsonUtility.FromJson<BoardEntryListWrapper>(json).entries;
         }
         else
             entries = new List<BoardEntry>();
@@ -58,17 +67,16 @@ public class LeaderboardManager : MonoBehaviour
         DestroyRows();
         entries.Sort((a, b) =>
         {
-            // First sort by difficulty (Hard > Medium > Easy)
+            // First sort by difficulty (Hard > Medium > Easy) then by time.
             int diffA = (int)a.difficulty;
             int diffB = (int)b.difficulty;
 
             if (diffA != diffB)
-                return diffB.CompareTo(diffA); // Reverse to get Hard first
+                return diffB.CompareTo(diffA);
 
-            // If same difficulty, sort by time (smaller is better)
             return a.time.CompareTo(b.time);
         });
-        //entries.Sort((a, b) => a.time.CompareTo(b.time));
+
         for (int i = 0; i < entries.Count && i < maxEntriesSize; i++)
         {
             GameObject newEntry = Instantiate(row, leaderboardTable.transform);
