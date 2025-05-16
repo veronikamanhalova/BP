@@ -123,7 +123,7 @@ public class WallGenerator : MonoBehaviour
         if (groupIdx == Dirrection.Right)
         {
             //generate Right Group
-            int randIdx = (Random.Range(0, 101) < 75) ? difficultyIdx : Random.Range(0, rightDiagonalGroup.Length);
+            int randIdx = (Random.Range(0, 101) < 76) ? difficultyIdx : Random.Range(0, rightDiagonalGroup.Length);
             
             rightDiagonalGroup[randIdx].SetActive(true);
             Instantiate(rightDiagonalGroup[randIdx], newPos, Quaternion.Euler(rotations[wallSideIdx]), holds);
@@ -132,7 +132,7 @@ public class WallGenerator : MonoBehaviour
         else
         {
             //generate Square Group 
-            int randIdx = (Random.Range(0, 101) < 75) ? difficultyIdx : Random.Range(0, squareGroup.Length);
+            int randIdx = (Random.Range(0, 101) < 76) ? difficultyIdx : Random.Range(0, squareGroup.Length);
 
             squareGroup[randIdx].SetActive(true);
             Instantiate(squareGroup[randIdx], newPos, Quaternion.Euler(rotations[wallSideIdx]), holds);
@@ -148,7 +148,7 @@ public class WallGenerator : MonoBehaviour
         if (groupIdx == Dirrection.Left)
         {
             //generate Left Group
-            int randIdx = (Random.Range(0, 101) < 75) ? difficultyIdx : Random.Range(0, leftDiagonalGroup.Length);
+            int randIdx = (Random.Range(0, 101) < 76) ? difficultyIdx : Random.Range(0, leftDiagonalGroup.Length);
 
             leftDiagonalGroup[randIdx].SetActive(true);
             Instantiate(leftDiagonalGroup[randIdx], newPos, Quaternion.Euler(rotations[wallSideIdx]), holds);
@@ -157,7 +157,7 @@ public class WallGenerator : MonoBehaviour
         else
         {
             //generate Square Group 
-            int randIdx = (Random.Range(0, 101) < 75) ? difficultyIdx : Random.Range(0, squareGroup.Length);
+            int randIdx = (Random.Range(0, 101) < 76) ? difficultyIdx : Random.Range(0, squareGroup.Length);
 
             squareGroup[randIdx].SetActive(true);
             Instantiate(squareGroup[randIdx], newPos, Quaternion.Euler(rotations[wallSideIdx]), holds);
@@ -172,7 +172,7 @@ public class WallGenerator : MonoBehaviour
         if (groupIdx == Dirrection.Right)
         {
             //generate Right Group
-            int randIdx = (Random.Range(0, 101) < 75) ? difficultyIdx : Random.Range(0, rightDiagonalGroup.Length);
+            int randIdx = (Random.Range(0, 101) < 76) ? difficultyIdx : Random.Range(0, rightDiagonalGroup.Length);
 
             rightDiagonalGroup[randIdx].SetActive(true);
             Instantiate(rightDiagonalGroup[randIdx], newPos, Quaternion.Euler(rotations[wallSideIdx]), holds);
@@ -181,7 +181,7 @@ public class WallGenerator : MonoBehaviour
         else if (groupIdx == Dirrection.Left)
         {
             //generate Left Group
-            int randIdx = (Random.Range(0, 101) < 75) ? difficultyIdx : Random.Range(0, leftDiagonalGroup.Length);
+            int randIdx = (Random.Range(0, 101) < 76) ? difficultyIdx : Random.Range(0, leftDiagonalGroup.Length);
 
             leftDiagonalGroup[randIdx].SetActive(true);
             Instantiate(leftDiagonalGroup[randIdx], newPos, Quaternion.Euler(rotations[wallSideIdx]), holds);
@@ -190,7 +190,7 @@ public class WallGenerator : MonoBehaviour
         else
         {
             //generate Square Group 
-            int randIdx = (Random.Range(0, 101) < 75) ? difficultyIdx : Random.Range(0, squareGroup.Length);
+            int randIdx = (Random.Range(0, 101) < 76) ? difficultyIdx : Random.Range(0, squareGroup.Length);
 
             squareGroup[randIdx].SetActive(true);
             Instantiate(squareGroup[randIdx], newPos, Quaternion.Euler(rotations[wallSideIdx]), holds);
