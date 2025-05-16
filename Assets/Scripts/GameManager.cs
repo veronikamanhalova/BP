@@ -173,6 +173,7 @@ public class GameManager : MonoBehaviour
         startScreenBlackout = false;
 
         timerCntr = 0.0f;
+        timer.text = string.Format("{0:00}:{1:00}", minutes, seconds);
         foreach (ControllerStamina stamina in characterController.GetComponentsInChildren<ControllerStamina>())
             stamina.staminaVal = 100.0f;
 
